@@ -1,0 +1,1905 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ICD-10 &amp; ICD-9-CM Training App — Bab IV &amp; Bab V | D3 RMIK UEU</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- =====================================================================
+       1. LAYAR PEMBUKA (SPLASH SCREEN)
+       Untuk mengganti kode showcase atau judul kelompok, edit bagian di bawah.
+       ===================================================================== -->
+  <section id="splash-screen" class="splash-screen" aria-label="Layar Pembuka">
+    <div class="splash-bg-pattern" aria-hidden="true"></div>
+
+    <div class="splash-card">
+      <div class="splash-badge">
+        CAPSTONE EXPERIENCE SEMESTER 3 · PRODI D3 RMIK · UNIVERSITAS ESA UNGGUL
+      </div>
+
+      <h1 class="splash-title">
+        Aplikasi Media Pembelajaran Kodifikasi<br />
+        <span>ICD-10 &amp; ICD-9-CM Training Tool</span>
+      </h1>
+
+      <p class="splash-subtitle">
+        Modul interaktif kodifikasi klinis berbasis alur standar WHO untuk
+        <strong>Bab IV (E00–E90: Endokrin, Nutrisi &amp; Metabolik)</strong> dan
+        <strong>Bab V (F00–F99: Gangguan Mental &amp; Perilaku)</strong>, dilengkapi
+        penelusuran tindakan ICD-9-CM, ilmu biomedis, farmakologi edukatif, dan evaluasi kasus.
+      </p>
+
+      <!-- Showcase Kode Relevan Bab IV & V (Mudah diganti sesuai studi kasus kelompok) -->
+      <div class="splash-codes" aria-label="Contoh Kode Modul">
+        <div class="code-pill"><span class="pill-tag">ICD-10</span> E10.3† H36.0*</div>
+        <div class="code-pill"><span class="pill-tag">ICD-10</span> E42</div>
+        <div class="code-pill"><span class="pill-tag">ICD-10</span> F20.0</div>
+        <div class="code-pill"><span class="pill-tag">ICD-10</span> F40.2</div>
+        <div class="code-pill"><span class="pill-tag">ICD-10</span> F53.0</div>
+        <div class="code-pill pill-proc"><span class="pill-tag">ICD-9-CM</span> 96.07</div>
+        <div class="code-pill pill-proc"><span class="pill-tag">ICD-9-CM</span> 94.39</div>
+        <div class="code-pill pill-proc"><span class="pill-tag">ICD-9-CM</span> 95.16</div>
+      </div>
+
+      <button id="btn-play" class="btn-play" type="button">
+        <span class="play-icon" aria-hidden="true">▶</span>
+        <span>PLAY</span>
+      </button>
+
+      <p class="splash-note">
+        Media pembelajaran akademik non-klinis · Acuan: WHO ICD-10 (2010) &amp; ICD-9-CM Vol. 3
+      </p>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       2. KERANGKA UTAMA APLIKASI (MUNCUL SETELAH TOMBOL PLAY DIKLIK)
+       ===================================================================== -->
+  <div id="app-shell" class="app-shell hidden">
+    <!-- Header Atas Biru -->
+    <header class="app-header">
+      <div class="header-left">
+        <button id="btn-back-menu" class="header-icon-btn hidden" type="button" title="Kembali ke Main Menu">
+          ← Menu Utama
+        </button>
+        <div class="header-title-wrap">
+          <div class="header-eyebrow-row">
+            <span class="header-eyebrow">ICD-10 &amp; ICD-9-CM TRAINING MODULE</span>
+            <span id="header-breadcrumb" class="header-breadcrumb">&gt; Main Menu &amp; Identitas Kelompok</span>
+          </div>
+          <h2 id="active-page-title" class="header-title">Main menu</h2>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <span class="version-badge" title="Acuan Resmi Klasifikasi">
+          ICD-10 WHO (2010) · ICD-9-CM Vol. 3 | SATUSEHAT
+        </span>
+        <button id="btn-back-splash" class="btn-splash-return" type="button" title="Kembali ke Layar Pembuka">
+          Layar Pembuka
+        </button>
+      </div>
+    </header>
+
+    <!-- Kontainer Halaman Aktif -->
+    <main class="app-main">
+      <!-- ================= VIEW: MAIN MENU ================= -->
+      <section id="view-main-menu" class="app-view active who-main-screen" aria-label="Main Menu Modul">
+        <!-- Top Royal Blue Header Bar (Gaya Main Menu WHO) -->
+        <header class="who-mm-topbar">
+          <div class="who-mm-topbar-inner">
+            <button
+              type="button"
+              class="who-mm-userguide who-menu-row"
+              data-target="view-user-guide"
+              data-title="User Guide — Petunjuk Penggunaan"
+            >
+              User Guide
+            </button>
+            <div class="who-mm-titlebar">
+              <div class="who-mm-title-left">
+                <h2>Main menu</h2>
+                <span>Capstone Semester 3 · D3 RMIK Universitas Esa Unggul</span>
+              </div>
+              <div class="who-mm-brand-right">
+                <div>
+                  <strong>ICD-10 &amp; ICD-9-CM</strong>
+                  <small>WHO Versi 2010 · Vol. 3 · SATUSEHAT</small>
+                </div>
+                <svg width="38" height="38" viewBox="0 0 40 40" aria-hidden="true">
+                  <circle cx="20" cy="20" r="18" fill="none" stroke="#FFFFFF" stroke-width="1.8" opacity="0.9" />
+                  <ellipse cx="20" cy="20" rx="10" ry="18" fill="none" stroke="#FFFFFF" stroke-width="1.2" opacity="0.75" />
+                  <line x1="2" y1="20" x2="38" y2="20" stroke="#FFFFFF" stroke-width="1.2" opacity="0.75" />
+                  <line x1="20" y1="2" x2="20" y2="38" stroke="#FFFFFF" stroke-width="1.4" opacity="0.85" />
+                  <path d="M17 12 C23 14, 15 20, 22 24 C25 26, 19 30, 17 31" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <div class="who-mm-body">
+          <div class="who-mm-matrix">
+            <!-- Sub-strip Module & Tombol Close (×) -->
+            <div class="who-mm-substrip">
+              <button
+                type="button"
+                class="who-mm-module-btn who-menu-row"
+                data-target="view-module-info"
+                data-title="Module — Ruang Lingkup &amp; Integrasi"
+              >
+                Module
+              </button>
+              <div class="who-mm-substrip-right">
+                <span>Modul Pembelajaran Bab IV (E00–E90) &amp; Bab V (F00–F99) — Pilih bagian untuk dipelajari</span>
+                <button
+                  id="btn-main-menu-close"
+                  type="button"
+                  class="who-mm-close-btn"
+                  title="Kembali ke Layar Pembuka"
+                  aria-label="Kembali ke Layar Pembuka"
+                >
+                  ×
+                </button>
+              </div>
+            </div>
+
+            <!-- Baris Utama Gaya WHO -->
+            <nav class="who-mm-rows" aria-label="Navigasi Modul Utama">
+              <button type="button" class="who-mm-row who-menu-row" data-target="view-references" data-title="INFO — Referensi &amp; Versi Klasifikasi">
+                <span class="who-mm-cell-left"><span class="who-mm-left-center">WHO–FIC</span></span>
+                <span class="who-mm-cell-right tone-blue">
+                  <span>Pengenalan Klasifikasi ICD-10 (2010), ICD-9-CM Vol. 3 &amp; Daftar Pustaka</span>
+                  <span class="who-mm-arrow" aria-hidden="true">▸</span>
+                </span>
+              </button>
+
+              <button type="button" class="who-mm-row who-menu-row" data-target="view-basics" data-title="BASICS — Kaidah Dasar Kodifikasi">
+                <span class="who-mm-cell-left"><span class="who-mm-left-center">Basics</span></span>
+                <span class="who-mm-cell-right tone-blue">
+                  <span>Struktur Klasifikasi, Kaidah Dagger (†) / Asterisk (*) &amp; Cara Kodifikasi</span>
+                  <span class="who-mm-arrow" aria-hidden="true">▸</span>
+                </span>
+              </button>
+
+              <button type="button" class="who-mm-row who-menu-row" data-target="view-chapter-4" data-title="Chapter IV — Endocrine, Nutritional and Metabolic Diseases (E00–E90)">
+                <span class="who-mm-cell-left">
+                  <span class="who-mm-num">4</span>
+                  <span class="who-mm-label">Chapter IV</span>
+                </span>
+                <span class="who-mm-cell-right tone-teal">
+                  <span>Endocrine, nutritional and metabolic diseases (E00–E90)</span>
+                  <span class="who-mm-arrow" aria-hidden="true">▸</span>
+                </span>
+              </button>
+
+              <button type="button" class="who-mm-row who-menu-row" data-target="view-chapter-5" data-title="Chapter V — Mental and Behavioural Disorders (F00–F99)">
+                <span class="who-mm-cell-left">
+                  <span class="who-mm-num">5</span>
+                  <span class="who-mm-label">Chapter V</span>
+                </span>
+                <span class="who-mm-cell-right tone-teal">
+                  <span>Mental and behavioural disorders (F00–F99)</span>
+                  <span class="who-mm-arrow" aria-hidden="true">▸</span>
+                </span>
+              </button>
+
+              <button type="button" class="who-mm-row who-menu-row" data-target="view-pharma" data-title="PHARMA — Farmakologi Edukatif (Bab IV &amp; Bab V)">
+                <span class="who-mm-cell-left">
+                  <span class="who-mm-num">P</span>
+                  <span class="who-mm-label">Pharmacology</span>
+                </span>
+                <span class="who-mm-cell-right tone-teal">
+                  <span>Farmakologi Edukatif Terpadu — Bab IV &amp; Bab V (Non-Resep)</span>
+                  <span class="who-mm-arrow" aria-hidden="true">▸</span>
+                </span>
+              </button>
+
+              <button type="button" class="who-mm-row who-menu-row" data-target="view-quiz" data-title="Latihan Kasus — Exercises ICD-10 &amp; ICD-9-CM">
+                <span class="who-mm-cell-left">
+                  <span class="who-mm-num">Q</span>
+                  <span class="who-mm-label">Exercises</span>
+                </span>
+                <span class="who-mm-cell-right tone-teal">
+                  <span>Latihan Soal Kasus Isian (10 ICD-10 &amp; 10 ICD-9-CM per Bab · Kolom + ✓)</span>
+                  <span class="who-mm-arrow" aria-hidden="true">▸</span>
+                </span>
+              </button>
+            </nav>
+
+            <!-- Grid 2-Kolom Akses Cepat Sub-bagian Bab IV & V -->
+            <div class="who-mm-bottom-grid-wrap">
+              <div class="who-mm-bottom-gutter">
+                <div>
+                  <strong>Akses Langsung Materi</strong>
+                  <p>Buka langsung Coding Review, Medical Science &amp; Anatomi, atau Latihan Kasus Bab IV &amp; Bab V.</p>
+                </div>
+                <span>Total: 20 Kasus · 40 Soal Isian</span>
+              </div>
+              <div class="who-mm-bottom-grid">
+                <button type="button" class="who-mm-grid-btn who-module-jump" data-target="view-chapter-4" data-subtab="coding" data-title="Chapter IV — Endocrine, Nutritional and Metabolic Diseases (E00–E90)">
+                  <span>Coding Review Bab IV (10 Kasus + ICD-9-CM)</span>
+                  <span aria-hidden="true">▸</span>
+                </button>
+                <button type="button" class="who-mm-grid-btn who-module-jump" data-target="view-chapter-5" data-subtab="coding" data-title="Chapter V — Mental and Behavioural Disorders (F00–F99)">
+                  <span>Coding Review Bab V (10 Kasus + ICD-9-CM)</span>
+                  <span aria-hidden="true">▸</span>
+                </button>
+                <button type="button" class="who-mm-grid-btn who-module-jump" data-target="view-chapter-4" data-subtab="science" data-title="Chapter IV — Endocrine, Nutritional and Metabolic Diseases (E00–E90)">
+                  <span>Medical Science &amp; Anatomi Bab IV</span>
+                  <span aria-hidden="true">▸</span>
+                </button>
+                <button type="button" class="who-mm-grid-btn who-module-jump" data-target="view-chapter-5" data-subtab="science" data-title="Chapter V — Mental and Behavioural Disorders (F00–F99)">
+                  <span>Medical Science &amp; Anatomi Otak Bab V</span>
+                  <span aria-hidden="true">▸</span>
+                </button>
+                <button type="button" class="who-mm-grid-btn who-exercise-jump" data-filter="bab4">
+                  <span>Latihan Kasus Bab IV (E00–E90 · 20 Soal)</span>
+                  <span aria-hidden="true">▸</span>
+                </button>
+                <button type="button" class="who-mm-grid-btn who-exercise-jump" data-filter="bab5">
+                  <span>Latihan Kasus Bab V (F00–F99 · 20 Soal)</span>
+                  <span aria-hidden="true">▸</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Footer Bar Matrix -->
+            <div class="who-mm-footer">
+              <span>Media Pembelajaran Akademik Non-Klinis · Bebas Data Pasien Nyata</span>
+              <button type="button" class="who-mm-footer-btn who-module-jump" data-target="view-module-info" data-title="Module — Ruang Lingkup &amp; Integrasi">
+                <span>Detail KAK &amp; 6 Mata Kuliah</span>
+                <span class="who-mm-play-dot" aria-hidden="true">▶</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Ringkasan Proyek Capstone, Integrasi 6 Mata Kuliah & Tabel Tim Editable di Home/Main Menu -->
+          <section class="home-capstone-panel" aria-label="Ringkasan Proyek Capstone, Integrasi 6 Mata Kuliah, dan Identitas Tim">
+            <div class="home-capstone-head">
+              <div>
+                <span class="capstone-hero-eyebrow">Capstone Experience Semester 3 · Prodi D3 RMIK Universitas Esa Unggul</span>
+                <h3>Media Pembelajaran Kodifikasi ICD-10 (Bab IV &amp; Bab V) &amp; ICD-9-CM Vol. 3</h3>
+                <p>Ruang lingkup dua bab utama: <strong>Bab IV (E00–E90: Endokrin, Nutrisi &amp; Metabolik)</strong> dan <strong>Bab V (F00–F99: Gangguan Mental &amp; Perilaku)</strong> — dilengkapi 20 kasus telusur, diagram anatomi interaktif, farmakologi non-resep, dan 40 soal isian.</p>
+              </div>
+            </div>
+
+            <div class="home-capstone-grid">
+              <div class="home-courses-col">
+                <h4>Integrasi 6 Mata Kuliah Semester 3</h4>
+                <div class="home-courses-list">
+                  <div class="home-course-item"><strong>RKE313 Algoritma &amp; Pemrograman</strong><span>Navigasi modul bertingkat, kontrol sub-tab, filter soal interaktif &amp; skor otomatis.</span></div>
+                  <div class="home-course-item"><strong>RKE326 Kodifikasi</strong><span>Alur WHO Lead Term → Indeks Alfabetis Vol. 3 → Daftar Tabular Vol. 1 &amp; ICD-9-CM Vol. 3.</span></div>
+                  <div class="home-course-item"><strong>RKE325 Patofisiologi &amp; Terminologi</strong><span>Anatomi, fisiologi, patofisiologi, dan bedah prefix–root–suffix terhubung diagram.</span></div>
+                  <div class="home-course-item"><strong>RKE361 Farmakologi</strong><span>Nama generik, golongan, kegunaan umum &amp; mekanisme obat–penyakit tanpa dosis resep.</span></div>
+                  <div class="home-course-item"><strong>RKE352 Statistik Pelayanan Kesehatan</strong><span>Konteks morbiditas, mortalitas, pelaporan SATUSEHAT (ICD-10 2010) &amp; klaim INA-CBGs.</span></div>
+                  <div class="home-course-item"><strong>RKE330 Organisasi &amp; Manajemen</strong><span>Pembagian peran kelompok, kontrol mutu materi (QA) &amp; dokumentasi pustaka.</span></div>
+                </div>
+              </div>
+
+              <div class="home-team-col">
+                <div class="home-team-head">
+                  <div>
+                    <h4>Identitas Anggota Kelompok &amp; Peran Tim</h4>
+                    <p>Ketua terisi tetap; baris anggota 2–4 dapat diedit langsung &amp; tersimpan otomatis.</p>
+                  </div>
+                  <button id="btn-edit-team-home" type="button" class="btn-secondary btn-team-edit">✎ Edit Anggota 2–4</button>
+                </div>
+                <div class="table-responsive">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th>No.</th>
+                        <th>Nama Mahasiswa</th>
+                        <th>NIM</th>
+                        <th>Peran dalam Proyek</th>
+                      </tr>
+                    </thead>
+                    <tbody id="home-team-tbody">
+                      <tr>
+                        <td>1</td>
+                        <td><strong>Athira Laha Afaf Yudia</strong></td>
+                        <td><code>20250306001</code></td>
+                        <td>Koordinator Kelompok &amp; PJ Coding Review</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <!-- ================= VIEW: USER GUIDE ================= -->
+      <section id="view-user-guide" class="app-view" aria-label="Petunjuk Penggunaan">
+        <div class="content-card">
+          <div class="section-banner">
+            <h3>Petunjuk Penggunaan Aplikasi</h3>
+            <p>Panduan singkat memaksimalkan pembelajaran kodifikasi klinis Bab IV &amp; Bab V.</p>
+          </div>
+
+          <div class="guide-grid">
+            <article class="guide-box">
+              <div class="guide-step">1</div>
+              <h4>Mulai dari BASICS</h4>
+              <p>Pahami perbedaan mendasar fungsi <strong>ICD-10</strong> (pengodean diagnosis/penyakit) dan <strong>ICD-9-CM Volume 3</strong> (pengodean tindakan/prosedur medis) serta alur 4 tahap verifikasi kode WHO.</p>
+            </article>
+            <article class="guide-box">
+              <div class="guide-step">2</div>
+              <h4>Pelajari Bab IV &amp; Bab V Secara Bertahap</h4>
+              <p>Setiap bab memiliki 4 sub-tab konsisten: <strong>Pengantar Bab</strong>, <strong>Coding Review</strong>, <strong>Medical Science</strong>, dan <strong>Farmakologi</strong>. Pahami konteks klinis sebelum menghafal kode.</p>
+            </article>
+            <article class="guide-box">
+              <div class="guide-step">3</div>
+              <h4>Evaluasi Kasus Isian (Kolom &amp; Tombol ✓)</h4>
+              <p>Pilih filter bab dan jenis kode (10 soal <strong>ICD-10</strong> &amp; 10 soal <strong>ICD-9-CM</strong> per bab), ketik kode pada kolom isian, lalu tekan tombol centang (<strong>✓</strong>) untuk melihat jawaban yang benar dan pembahasannya.</p>
+            </article>
+            <article class="guide-box">
+              <div class="guide-step">4</div>
+              <h4>Batasan &amp; Etika Data</h4>
+              <p>Seluruh skenario kasus dalam aplikasi bersifat <strong>fiktif akademik</strong> (bebas data pasien nyata). Pembahasan obat hanya bersifat edukatif, bukan anjuran resep atau dosis klinis.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= VIEW: MODULE INFO ================= -->
+      <section id="view-module-info" class="app-view" aria-label="Informasi Modul Capstone">
+        <!-- Tabel Identitas Anggota Kelompok (Sinkron dengan Home & localStorage) -->
+        <section class="group-card" style="margin-bottom:20px;" aria-label="Identitas Anggota Kelompok">
+          <div class="group-card-header">
+            <div>
+              <h4>Identitas Kelompok Penyusun — Program Studi D3 Rekam Medis &amp; Informasi Kesehatan</h4>
+              <span class="group-badge">Semester 3 · T.A. 2026</span>
+            </div>
+            <button id="btn-edit-team-module" type="button" class="btn-secondary btn-team-edit">✎ Edit Anggota 2–4</button>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>Nama Lengkap Mahasiswa</th>
+                  <th>NIM</th>
+                  <th>Peran dalam Proyek Capstone</th>
+                </tr>
+              </thead>
+              <tbody id="module-team-tbody">
+                <tr>
+                  <td>1</td>
+                  <td><strong>Athira Laha Afaf Yudia</strong></td>
+                  <td><code>20250306001</code></td>
+                  <td>Koordinator Kelompok &amp; PJ Coding Review</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <div class="content-card">
+          <div class="section-banner">
+            <h3>Daftar Modul Capstone &amp; Integrasi 6 Mata Kuliah</h3>
+            <p>Mengikuti struktur modul WHO ICD-10 Training Tool dan Kerangka Acuan Kerja (KAK) Semester 3 D3 RMIK Universitas Esa Unggul.</p>
+          </div>
+
+          <div class="comparison-grid" style="margin-top:0;margin-bottom:20px;">
+            <div class="compare-box box-icd10">
+              <h4>Module 4 · Chapter IV (E00–E90)</h4>
+              <p style="font-size:0.88rem;margin:0 0 10px;">Endocrine, Nutritional and Metabolic Diseases — Pengantar Bab, Coding Review Vol. 2 (10 Kasus + ICD-9-CM), Medical Science, &amp; Farmakologi.</p>
+              <button type="button" class="btn-primary who-module-jump" data-target="view-chapter-4" data-title="Chapter IV — Endocrine, Nutritional and Metabolic Diseases (E00–E90)" style="padding:8px 14px;font-size:0.84rem;">Buka Module 4 →</button>
+            </div>
+            <div class="compare-box box-icd9">
+              <h4>Module 5 · Chapter V (F00–F99)</h4>
+              <p style="font-size:0.88rem;margin:0 0 10px;">Mental and Behavioural Disorders — Pengantar Bab, Coding Review Vol. 2 (10 Kasus + ICD-9-CM), Medical Science, &amp; Farmakologi.</p>
+              <button type="button" class="btn-primary who-module-jump" data-target="view-chapter-5" data-title="Chapter V — Mental and Behavioural Disorders (F00–F99)" style="padding:8px 14px;font-size:0.84rem;background:linear-gradient(135deg,#0e8388,#14a098);">Buka Module 5 →</button>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Mata Kuliah</th>
+                  <th>Kontribusi dalam Aplikasi Pembelajaran</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>RKE313 Algoritma &amp; Pemrograman</strong></td>
+                  <td>Struktur navigasi bertingkat, logika perpindahan sub-tab, filter soal interaktif, serta kalkulasi skor otomatis.</td>
+                </tr>
+                <tr>
+                  <td><strong>RKE326 Kodifikasi</strong></td>
+                  <td>Ketepatan alur penelusuran <em>Lead Term → Indeks Alfabetis (Vol. 3) → Daftar Tabular (Vol. 1)</em> pada ICD-10 dan penelusuran tindakan ICD-9-CM.</td>
+                </tr>
+                <tr>
+                  <td><strong>RKE325 Patofisiologi &amp; Terminologi</strong></td>
+                  <td>Diagram anatomi/fisiologi/patofisiologi organ endokrin &amp; sistem saraf pusat beserta bedah akar kata, prefiks, dan sufiks istilah medis.</td>
+                </tr>
+                <tr>
+                  <td><strong>RKE361 Farmakologi</strong></td>
+                  <td>Pemetaan edukatif golongan obat (insulin, levothyroxine, antipsikotik, antidepresan, dll.) terhadap mekanisme penyakit tanpa anjuran resep.</td>
+                </tr>
+                <tr>
+                  <td><strong>RKE352 Statistik Pelayanan Kesehatan</strong></td>
+                  <td>Integrasi konteks beban morbiditas penyakit kronis &amp; gangguan mental serta akurasi data klaim INA-CBGs / SATUSEHAT.</td>
+                </tr>
+                <tr>
+                  <td><strong>RKE330 Organisasi &amp; Manajemen</strong></td>
+                  <td>Pembagian peran tim, kontrol mutu materi, dan dokumentasi rujukan klasifikasi yang terstandar.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= VIEW: BASICS ================= -->
+      <section id="view-basics" class="app-view" aria-label="Dasar Kodifikasi WHO">
+        <div class="content-card">
+          <div class="section-banner">
+            <h3>Dasar Kodifikasi Klinis: Alur Standar Verifikasi WHO</h3>
+            <p>Prinsip wajib sebelum menetapkan kode diagnosis (ICD-10) dan kode prosedur (ICD-9-CM).</p>
+          </div>
+
+          <!-- Diagram Alur 4 Langkah Standar Verifikasi Kodifikasi WHO -->
+          <div class="who-flow-wrapper" role="region" aria-label="Alur Standar Verifikasi Kodifikasi Standar WHO">
+            <div class="who-flow-header">
+              <span class="who-flow-pill">ALUR STANDAR VERIFIKASI KODIFIKASI (STANDAR WHO)</span>
+            </div>
+            <div class="who-flow-row">
+              <article class="who-flow-card">
+                <div class="who-flow-num">1</div>
+                <div class="who-flow-icon-box" aria-hidden="true">
+                  <svg width="64" height="52" viewBox="0 0 64 52" fill="none">
+                    <rect x="10" y="6" width="34" height="40" rx="5" fill="#ffffff" stroke="#60a5fa" stroke-width="2" />
+                    <line x1="17" y1="16" x2="34" y2="16" stroke="#93c5fd" stroke-width="2.5" stroke-linecap="round" />
+                    <line x1="17" y1="24" x2="30" y2="24" stroke="#93c5fd" stroke-width="2.5" stroke-linecap="round" />
+                    <line x1="17" y1="32" x2="26" y2="32" stroke="#93c5fd" stroke-width="2.5" stroke-linecap="round" />
+                    <circle cx="40" cy="30" r="10" fill="#eff6ff" stroke="#1d4ed8" stroke-width="2.5" />
+                    <line x1="47" y1="37" x2="55" y2="45" stroke="#1d4ed8" stroke-width="3" stroke-linecap="round" />
+                  </svg>
+                </div>
+                <h5>Identifikasi Lead Term</h5>
+                <p>Menentukan kata kunci utama dari pernyataan diagnosis atau tindakan klinis.</p>
+                <span class="who-flow-footer-pill">Analisis Terminologi</span>
+              </article>
+              <div class="who-flow-arrow" aria-hidden="true">→</div>
+              <article class="who-flow-card teal">
+                <div class="who-flow-num">2</div>
+                <div class="who-flow-icon-box" aria-hidden="true">
+                  <svg width="72" height="52" viewBox="0 0 72 52" fill="none">
+                    <path d="M8 12C17 9 27 10 36 14V45C27 41 17 40 8 43V12Z" fill="#ffffff" stroke="#0d9488" stroke-width="2" />
+                    <path d="M64 12C55 9 45 10 36 14V45C45 41 55 40 64 43V12Z" fill="#ffffff" stroke="#0d9488" stroke-width="2" />
+                    <text x="22" y="29" text-anchor="middle" font-size="9.5" font-weight="800" fill="#0f766e">A–Z</text>
+                    <text x="50" y="29" text-anchor="middle" font-size="9.5" font-weight="800" fill="#0f766e">Vol. 3</text>
+                  </svg>
+                </div>
+                <h5>Indeks Alfabetis</h5>
+                <p>Menelusuri lead term &amp; modifier esensial pada ICD-10 Volume 3 (jangan berhenti di tahap ini).</p>
+                <span class="who-flow-footer-pill">Kandidat Kode Awal</span>
+              </article>
+              <div class="who-flow-arrow" aria-hidden="true">→</div>
+              <article class="who-flow-card amber">
+                <div class="who-flow-num">3</div>
+                <div class="who-flow-icon-box" aria-hidden="true">
+                  <div style="background:#ffffff;border:1.5px solid #f59e0b;border-radius:8px;padding:4px 10px;font-size:0.72rem;line-height:1.4;">
+                    <strong style="color:#b45309;display:block;">Vol. 1 Tabular</strong>
+                    <span style="color:#047857;font-weight:700;display:block;">✓ Includes</span>
+                    <span style="color:#dc2626;font-weight:700;display:block;">✕ Excludes</span>
+                  </div>
+                </div>
+                <h5>Daftar Tabular</h5>
+                <p>Memeriksa catatan bab, blok, Includes/Excludes, tanda baca (†/*), dan karakter ke-4/ke-5.</p>
+                <span class="who-flow-footer-pill">Verifikasi Aturan Bab</span>
+              </article>
+              <div class="who-flow-arrow" aria-hidden="true">→</div>
+              <article class="who-flow-card emerald">
+                <div class="who-flow-num">4</div>
+                <div class="who-flow-icon-box" aria-hidden="true">
+                  <svg width="46" height="46" viewBox="0 0 46 46" fill="none">
+                    <circle cx="23" cy="23" r="19" fill="#10b981" />
+                    <path d="M14 23.5L20 29.5L32 17" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </div>
+                <h5>Kode Akurat</h5>
+                <p>ICD-10 (Diagnosis) &amp; ICD-9-CM (Prosedur) ditetapkan lengkap disertai rasionalisasi.</p>
+                <span class="who-flow-footer-pill">Siap Disajikan</span>
+              </article>
+            </div>
+          </div>
+
+          <div class="comparison-grid">
+            <div class="compare-box box-icd10">
+              <h4>ICD-10 (Diagnosis Penyakit)</h4>
+              <ul>
+                <li><strong>Fungsi:</strong> Mengkode diagnosis penyakit, kondisi klinis, dan gangguan kesehatan.</li>
+                <li><strong>Format Kode:</strong> Alfanumerik (1 huruf + 2–3 angka, mis. <code>E10.3</code>, <code>F53.0</code>).</li>
+                <li><strong>Sistem Khusus:</strong> Menggunakan <strong>Dagger (†)</strong> untuk etiologi penyakit dasar dan <strong>Asterisk (*)</strong> untuk manifestasi pada organ tertentu (mis. <code>E10.3† H36.0*</code>).</li>
+              </ul>
+            </div>
+            <div class="compare-box box-icd9">
+              <h4>ICD-9-CM Volume 3 (Prosedur / Tindakan)</h4>
+              <ul>
+                <li><strong>Fungsi:</strong> Mengkode prosedur diagnostik, terapi bedah, dan tindakan non-operatif.</li>
+                <li><strong>Format Kode:</strong> Numerik seluruhnya (2 digit + titik + 1–2 digit, mis. <code>96.07</code>, <code>94.39</code>).</li>
+                <li><strong>Aturan Penting:</strong> Kode prosedur <em>tidak dapat menggantikan</em> fungsi kode diagnosis pada pelaporan morbiditas.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= VIEW: BAB IV (E00-E90) ================= -->
+      <section id="view-chapter-4" class="app-view" aria-label="Bab IV Penyakit Endokrin, Nutrisi dan Metabolik">
+        <!-- Header Bab IV -->
+        <div class="chapter-header ch4-header">
+          <div>
+            <span class="chapter-code-pill">BAB IV · KODE E00–E90</span>
+            <h3>Endocrine, Nutritional and Metabolic Diseases</h3>
+            <p class="chapter-id-title">Penyakit Endokrin, Nutrisi, dan Metabolik — Pemahaman Kaidah Kodifikasi, Biomedis, &amp; Farmakologi</p>
+          </div>
+          <div class="chapter-meta">
+            <span>8 Blok Utama</span>
+            <span>Dagger/Asterisk Aktif</span>
+          </div>
+        </div>
+
+        <!-- 4 Sub-Tab Bab IV + Exercises -->
+        <div class="subtab-bar" role="tablist" aria-label="Sub-menu Bab IV">
+          <button class="subtab-btn active" data-chapter="4" data-tab="pengantar" role="tab" aria-selected="true" type="button">1. Overview</button>
+          <button class="subtab-btn" data-chapter="4" data-tab="coding" role="tab" aria-selected="false" type="button">2. Coding Review</button>
+          <button class="subtab-btn" data-chapter="4" data-tab="science" role="tab" aria-selected="false" type="button">3. Medical Science</button>
+          <button class="subtab-btn" data-chapter="4" data-tab="pharma" role="tab" aria-selected="false" type="button">4. Pharmacology</button>
+          <button class="subtab-btn who-exercise-jump" data-filter="bab4" type="button">5. Exercises →</button>
+        </div>
+
+        <!-- TAB 4.1: PENGANTAR BAB IV -->
+        <div id="ch4-pengantar" class="subtab-panel active">
+          <div class="who-sheet">
+            <div class="who-watermark" aria-hidden="true">Overview</div>
+            <div class="who-sheet-body">
+              <div class="overview-split-grid">
+                <aside class="who-summary-card" aria-label="Ringkasan Klasifikasi WHO Bab IV">
+                  <div>
+                    <span class="who-summary-eyebrow">CHAPTER IV · E00–E90</span>
+                    <h5>Endocrine, Nutritional and Metabolic Diseases</h5>
+                    <p class="who-summary-sub">Penyakit Endokrin, Nutrisi, dan Metabolik</p>
+                  </div>
+
+                  <div>
+                    <span class="who-summary-label">Incl. (Termasuk dalam Bab)</span>
+                    <ul>
+                      <li>Gangguan kelenjar endokrin (tiroid, pankreas, paratiroid, hipofisis, adrenal, gonad).</li>
+                      <li>Malnutrisi energi-protein (E40–E46) &amp; defisiensi vitamin/mineral (E50–E64).</li>
+                      <li>Obesitas (E65–E68) &amp; kelainan metabolik cairan, elektrolit, lipid, asam amino (E70–E90).</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <span class="who-summary-label warn">Excl. (Dikecualikan dari Bab)</span>
+                    <ul>
+                      <li>Diabetes melitus pada kehamilan, persalinan, dan nifas → Bab XV (<code>O24.-</code>).</li>
+                      <li>Gangguan endokrin &amp; metabolik transien khas perinatal → Bab XVI (<code>P70–P74</code>).</li>
+                      <li>Temuan abnormal laboratorium/gejala tanpa diagnosis pasti → Bab XVIII (<code>R00–R99</code>).</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <span class="who-summary-label">Blok Kode Utama (E00–E90)</span>
+                    <div class="who-block-mini"><code>E00–E07</code><span>Disorders of thyroid gland</span></div>
+                    <div class="who-block-mini"><code>E10–E14</code><span>Diabetes mellitus</span></div>
+                    <div class="who-block-mini"><code>E15–E16</code><span>Other glucose regulation &amp; pancreatic</span></div>
+                    <div class="who-block-mini"><code>E20–E35</code><span>Disorders of other endocrine glands</span></div>
+                    <div class="who-block-mini"><code>E40–E46</code><span>Malnutrition</span></div>
+                    <div class="who-block-mini"><code>E50–E64</code><span>Other nutritional deficiencies</span></div>
+                    <div class="who-block-mini"><code>E65–E68</code><span>Obesity and other hyperalimentation</span></div>
+                    <div class="who-block-mini"><code>E70–E90</code><span>Metabolic disorders</span></div>
+                  </div>
+
+                  <div class="who-dagger-box">
+                    <span class="who-summary-label">Kategori Asterisk (*) &amp; Pasangan Dagger (†)</span>
+                    <ul>
+                      <li><code>E35*</code> Disorders of endocrine glands in diseases classified elsewhere</li>
+                      <li><code>E90*</code> Nutritional and metabolic disorders in diseases classified elsewhere</li>
+                      <li><code>E10–E14 (.3)†</code> → <code>H36.0*</code> Retinopati / <code>H28.0*</code> Katarak diabetik</li>
+                      <li><code>E10–E14 (.4)†</code> → <code>G63.2*</code> Polineuropati diabetik</li>
+                      <li><code>E10–E14 (.5)†</code> → <code>I79.2*</code> Angiopati perifer · <code>(.2)† → N08.3*</code> Nefropati</li>
+                    </ul>
+                  </div>
+                </aside>
+
+                <div>
+                  <h4>Tujuan Pembelajaran Bab IV (E00–E90)</h4>
+                  <ul class="clean-list">
+                    <li>Menjelaskan ruang lingkup klasifikasi penyakit kelenjar endokrin, malnutrisi, dan gangguan metabolik pada rentang kode <code>E00–E90</code>.</li>
+                    <li>Menerapkan aturan subkategori karakter ke-4 khusus Diabetes Melitus (<code>E10–E14</code>) serta sistem pasangan <em>Dagger (†) &amp; Asterisk (*)</em>.</li>
+                    <li>Membedakan pengecualian bab (<em>Excludes</em>) seperti diabetes dalam kehamilan (<code>O24.-</code>) dan gangguan metabolik transien pada neonatus (<code>P70–P74</code>).</li>
+                    <li>Menelusuri kode tindakan medis terkait Bab IV pada <strong>ICD-9-CM Volume 3</strong> (seperti pemeriksaan OCT mata, pemasangan NGT, EMG/NCV, hingga debridemen ulkus diabetikum).</li>
+                  </ul>
+
+                  <div class="stats-callout">
+                    <h5>Konteks Statistik Pelayanan Kesehatan</h5>
+                    <p>
+                      Penyakit endokrin-metabolik kronis—terutama <strong>Diabetes Melitus</strong> beserta komplikasi mikrovaskular dan makrovaskular—menyumbang beban <strong>morbiditas</strong> rawat jalan/rawat inap tertinggi serta berkontribusi bermakna terhadap <strong>mortalitas</strong> (seperti koma ketoasidosis dan gagal ginjal/kardiovaskular) di rumah sakit Indonesia. Ketepatan penulisan karakter ke-4 serta pemisahan kode prosedur ICD-9-CM sangat menentukan validitas pelaporan nasional <strong>SATUSEHAT Kemenkes RI (ICD-10 versi 2010)</strong> dan akurasi pengelompokan pembiayaan <strong>INA-CBGs</strong>.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <h4>Anatomi Organ Kunci Bab IV (E00–E90)</h4>
+              <div class="overview-anatomy-card">
+                <figure class="anatomy-img-box">
+                  <img src="images/anatomy_endocrine.jpg" alt="Anatomi Organ Endokrin Bab IV: Hipotalamus, Hipofisis, Tiroid, dan Pankreas Pulau Langerhans" />
+                  <figcaption>Organ endokrin utama: Hipofisis (ADH/E23.2), Tiroid (T3–T4/E00–E06), dan Pankreas (Insulin/E10–E14).</figcaption>
+                </figure>
+                <div class="science-text-col">
+                  <div class="bio-block">
+                    <h5>Hipotalamus &amp; Hipofisis</h5>
+                    <p>Mengatur keseimbangan cairan melalui hormon ADH. Kekurangan ADH memicu <strong>Diabetes Insipidus (<code>E23.2</code>)</strong>.</p>
+                  </div>
+                  <div class="bio-block">
+                    <h5>Kelenjar Tiroid &amp; Pankreas</h5>
+                    <p>Tiroid mensintesis T3/T4 (<code>E00–E06</code>), sedangkan sel beta Pulau Langerhans pankreas memproduksi insulin pengatur glukosa (<code>E10–E14</code>).</p>
+                  </div>
+                </div>
+              </div>
+
+              <h4>Rincian Blok Kode Utama Bab IV (ICD-10 WHO 2010)</h4>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Rentang Blok</th>
+                      <th>Deskripsi Kelompok Kondisi</th>
+                      <th>Contoh Kondisi Klinis</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td><code>E00–E07</code></td><td>Disorders of thyroid gland</td><td>Sindrom defisiensi yodium kongenital (<code>E00.0, E00.1</code>), Tiroiditis akut (<code>E06.0</code>)</td></tr>
+                    <tr><td><code>E10–E14</code></td><td>Diabetes mellitus</td><td>DM Tipe 1 dengan retinopati (<code>E10.3† H36.0*</code>), DM dengan gangren (<code>E14.5</code>)</td></tr>
+                    <tr><td><code>E15–E16</code></td><td>Other disorders of glucose regulation and pancreatic internal secretion</td><td>Koma hipoglikemik non-diabetik (<code>E15</code>)</td></tr>
+                    <tr><td><code>E20–E35</code></td><td>Disorders of other endocrine glands</td><td>Diabetes insipidus (<code>E23.2</code>), Sindrom Cushing (<code>E24.-</code>)</td></tr>
+                    <tr><td><code>E40–E46</code></td><td>Malnutrition</td><td>Kwashiorkor (<code>E40</code>), Marasmus (<code>E41</code>), Marasmic kwashiorkor (<code>E42</code>)</td></tr>
+                    <tr><td><code>E50–E64</code></td><td>Other nutritional deficiencies</td><td>Defisiensi vitamin A (<code>E50.-</code>), Defisiensi vitamin D (<code>E55.-</code>)</td></tr>
+                    <tr><td><code>E65–E68</code></td><td>Obesity and other hyperalimentation</td><td>Obesitas akibat kelebihan kalori (<code>E66.0</code>)</td></tr>
+                    <tr><td><code>E70–E90</code></td><td>Metabolic disorders</td><td>Ketidakseimbangan elektrolit (<code>E87.8</code>), Gangguan metabolisme lipid (<code>E78.-</code>)</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 4.2: CODING REVIEW BAB IV (10 KASUS LENGKAP DI-RENDER OLEH SCRIPT.JS) -->
+        <div id="ch4-coding" class="subtab-panel">
+          <div class="who-sheet">
+            <div class="who-watermark" aria-hidden="true">Coding Review</div>
+            <div class="who-sheet-body inner-flat">
+            <h4>A. Ringkasan Aturan Bab, Lead Term &amp; Pemeriksaan Catatan Tabular (Bab IV · E00–E90)</h4>
+            <div class="coding-kak-grid">
+              <div class="coding-kak-card">
+                <span class="coding-kak-eyebrow">1. Ringkasan Aturan Bab (WHO Vol. 2)</span>
+                <ul>
+                  <li>Tetapkan <strong>subdivisi karakter ke-4 (.0–.9)</strong> secara konsisten pada blok <code>E10–E14</code> sesuai komplikasi spesifik.</li>
+                  <li>Pasangkan kode etiologi <strong>Dagger (†)</strong> dan manifestasi organ <strong>Asterisk (*)</strong> untuk komplikasi organ target (<code>H36.0*</code>, <code>G63.2*</code>, <code>I79.2*</code>).</li>
+                  <li>Gunakan <code>E14.-</code> hanya jika tipe Diabetes Melitus tidak dirinci pada rekam medis.</li>
+                </ul>
+              </div>
+              <div class="coding-kak-card teal">
+                <span class="coding-kak-eyebrow">2. Penentuan Lead Term &amp; Sumber Indeks</span>
+                <p>Pilih kata benda kondisi patologis utama pada <strong>ICD-10 Volume 3 (Section I)</strong> seperti <em>Diabetes</em>, <em>Thyroiditis</em>, <em>Syndrome</em>, <em>Kwashiorkor</em>, atau <em>Imbalance</em>, lalu ikuti modifier esensial tipe dan komplikasi sebelum menuju Volume 1.</p>
+              </div>
+              <div class="coding-kak-card amber">
+                <span class="coding-kak-eyebrow">3. Pemeriksaan Catatan Tabular (Vol. 1)</span>
+                <p>Periksa catatan <strong>Includes</strong> (mis. abses tiroid pada <code>E06.0</code>), <strong>Excludes</strong> (DM kehamilan → <code>O24.-</code>; perinatal → <code>P70–P74</code>), serta catatan tambahan kode agen infeksi (<code>B95–B97</code>) dan derajat IQ (<code>F70–F73</code>).</p>
+              </div>
+            </div>
+
+            <div class="rules-grid">
+              <div class="rule-card rule-warn">
+                <h5>Catatan Excludes Penting (Bab IV)</h5>
+                <ul>
+                  <li>Komplikasi kehamilan, persalinan, dan nifas seperti Diabetes Melitus gestasional dikode ke <strong>Bab XV (<code>O24.-</code>)</strong>, bukan E10–E14.</li>
+                  <li>Gangguan endokrin dan metabolik sementara yang khas pada periode perinatal (mis. hipoglikemia neonatus) dikode ke <strong>Bab XVI (<code>P70–P74</code>)</strong>.</li>
+                  <li>Gejala dan tanda abnormal laboratorium tanpa diagnosis pasti (mis. glukosuria) dikode ke <strong>Bab XVIII (<code>R00–R99</code>)</strong>.</li>
+                </ul>
+              </div>
+              <div class="rule-card rule-info">
+                <h5>Subdivisi Karakter ke-4 pada E10–E14 &amp; Sistem † / *</h5>
+                <ul>
+                  <li><strong>.0</strong> koma · <strong>.1</strong> ketoasidosis · <strong>.2</strong> komplikasi ginjal (<code>† N08.3*</code>).</li>
+                  <li><strong>.3</strong> komplikasi oftalmik (<code>† H36.0*</code> retinopati, <code>† H28.0*</code> katarak diabetik).</li>
+                  <li><strong>.4</strong> komplikasi neurologis (<code>† G63.2*</code> polineuropati).</li>
+                  <li><strong>.5</strong> sirkulasi perifer (gangren, angiopati perifer <code>† I79.2*</code>) · <strong>.7</strong> komplikasi multipel.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="icd9-subchapter-box">
+              <div class="icd9-subchapter-head">
+                <h5>Subbab ICD-9-CM Volume 3: Prosedur &amp; Tindakan Medis Bab IV</h5>
+                <code>Terpisah dari Kode Diagnosis ICD-10</code>
+              </div>
+              <p><strong>Fungsi Kode Prosedur:</strong> Mendokumentasikan tindakan diagnostik maupun terapi medis/bedah menggunakan kode numerik ICD-9-CM Volume 3 dan tidak pernah menggantikan kode diagnosis ICD-10.</p>
+              <p><strong>Contoh Tindakan Relevan &amp; Penelusuran:</strong> Pada malnutrisi berat (<code>E42</code>) → tindakan pemasangan selang makan ditelusuri melalui <em>Lead Term</em> <code>Insertion</code> → <code>tube</code> → <code>nasogastric</code> → verifikasi Daftar Tabular <code>96.07</code>. Untuk pemantauan retinopati diabetik (<code>E10.3† H36.0*</code>) → <code>Tomography</code> → <code>optical coherence</code> → <code>95.16</code>.</p>
+              <p><strong>Alasan Pemilihan Kode:</strong> Rute hidung–lambung terkonfirmasi pada <code>96.07</code> (terpisah dari infus nutrisi enteral <code>96.6</code>), sedangkan pemindaian tomografi koherensi optik retina tervalidasi pada <code>95.16</code>.</p>
+            </div>
+
+            <h4>B. Studi Kasus Penelusuran Kode Diagnosis (ICD-10) &amp; Prosedur (ICD-9-CM) — 10 Kasus Bab IV</h4>
+            <div id="ch4-cases-container" class="case-accordion"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 4.3: MEDICAL SCIENCE BAB IV -->
+        <div id="ch4-science" class="subtab-panel">
+          <div class="who-sheet">
+            <div class="who-watermark teal" aria-hidden="true">Medical Science</div>
+            <div class="who-sheet-body inner-flat">
+            <h4>A. Gambar Anatomi Organ, Fisiologi &amp; Patofisiologi Endokrin–Metabolik</h4>
+            <div class="anatomy-showcase">
+              <figure class="anatomy-img-box">
+                <img src="images/anatomy_endocrine.jpg" alt="Ilustrasi Anatomi Sistem Endokrin Bab IV: Hipotalamus, Hipofisis, Kelenjar Tiroid, dan Pankreas Pulau Langerhans" />
+                <figcaption>Gambar Anatomi Bab IV: Lokasi kelenjar hipofisis, tiroid, dan pankreas (Pulau Langerhans sel α, β, dan δ).</figcaption>
+              </figure>
+              <div class="science-text-col with-watermark">
+                <svg class="science-bg-silhouette" viewBox="0 0 220 220" fill="none" aria-hidden="true">
+                  <path d="M110 22 V56 M110 56 C90 42, 68 50, 72 78 C74 96, 94 102, 110 88 C126 102, 146 96, 148 78 C152 50, 130 42, 110 56 Z" stroke="#0284c7" stroke-width="4" />
+                  <path d="M52 146 C86 138, 130 138, 174 126 C188 122, 198 134, 184 148 C164 166, 120 172, 72 182 C48 186, 36 154, 52 146 Z" stroke="#0284c7" stroke-width="4" />
+                </svg>
+                <div class="bio-block">
+                  <h5>A. Hipotalamus &amp; Hipofisis (Pituitari)</h5>
+                  <p>Lobus posterior melepaskan hormon antidiuretik (ADH) untuk menjaga reabsorpsi air ginjal. Defisit ADH memicu Diabetes Insipidus (<code>E23.2</code>).</p>
+                </div>
+                <div class="bio-block">
+                  <h5>B. Kelenjar Tiroid (Leher Anterior)</h5>
+                  <p>Menyerap yodium untuk sintesis hormon T3/T4. Defisiensi kongenital memicu sindrom <code>E00.0 / E00.1</code> dan infeksi akut memicu tiroiditis <code>E06.0</code>.</p>
+                </div>
+                <div class="bio-block">
+                  <h5>C. Pankreas &amp; Pulau Langerhans (Sel α, β, δ)</h5>
+                  <p>Sel beta mensekresi hormon insulin. Kerusakan autoimun atau resistensi reseptor memicu Diabetes Melitus (<code>E10–E14</code>) dan komplikasi mikrovaskular.</p>
+                </div>
+              </div>
+            </div>
+            <div class="science-layout">
+              <figure class="svg-diagram-card">
+                <svg viewBox="0 0 560 340" role="img" aria-label="Diagram Regulasi Glukosa oleh Pankreas dan Patofisiologi Komplikasi Diabetes">
+                  <defs>
+                    <linearGradient id="bgGrad4" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stop-color="#f0f9ff" />
+                      <stop offset="100%" stop-color="#e0f2fe" />
+                    </linearGradient>
+                    <marker id="arrowBlue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                      <path d="M0,0 L6,3 L0,6 Z" fill="#0284c7" />
+                    </marker>
+                    <marker id="arrowRed" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                      <path d="M0,0 L6,3 L0,6 Z" fill="#dc2626" />
+                    </marker>
+                  </defs>
+                  <rect width="560" height="340" rx="12" fill="url(#bgGrad4)" stroke="#bae6fd" stroke-width="1.5"/>
+                  <text x="280" y="26" text-anchor="middle" font-size="14" font-weight="700" fill="#0c4a6e">Regulasi Glukosa (Pankreas) &amp; Patofisiologi Diabetes Melitus</text>
+
+                  <rect x="20" y="42" width="248" height="280" rx="10" fill="#ffffff" stroke="#7dd3fc" stroke-width="1.5"/>
+                  <text x="144" y="64" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0369a1">FISIOLOGI NORMAL</text>
+
+                  <rect x="44" y="80" width="200" height="44" rx="8" fill="#e0f2fe" stroke="#38bdf8"/>
+                  <text x="144" y="99" text-anchor="middle" font-size="11.5" font-weight="700" fill="#0c4a6e">Glukosa Darah Meningkat</text>
+                  <text x="144" y="114" text-anchor="middle" font-size="10" fill="#334155">(Pasca asupan karbohidrat)</text>
+
+                  <line x1="144" y1="124" x2="144" y2="148" stroke="#0284c7" stroke-width="2" marker-end="url(#arrowBlue)"/>
+
+                  <rect x="44" y="152" width="200" height="50" rx="8" fill="#fef3c7" stroke="#f59e0b"/>
+                  <text x="144" y="172" text-anchor="middle" font-size="11.5" font-weight="700" fill="#92400e">Sel Beta Pulau Langerhans</text>
+                  <text x="144" y="188" text-anchor="middle" font-size="10" fill="#78350f">Pankreas mensekresi hormon INSULIN</text>
+
+                  <line x1="144" y1="202" x2="144" y2="226" stroke="#0284c7" stroke-width="2" marker-end="url(#arrowBlue)"/>
+
+                  <rect x="44" y="230" width="200" height="72" rx="8" fill="#dcfce7" stroke="#22c55e"/>
+                  <text x="144" y="249" text-anchor="middle" font-size="11.5" font-weight="700" fill="#166534">Ambilan Glukosa oleh Sel</text>
+                  <text x="144" y="265" text-anchor="middle" font-size="10" fill="#14532d">Otot &amp; adiposa menyerap glukosa;</text>
+                  <text x="144" y="279" text-anchor="middle" font-size="10" fill="#14532d">glukosa darah kembali stabil</text>
+                  <text x="144" y="293" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">(Normoglikemia)</text>
+
+                  <rect x="292" y="42" width="248" height="280" rx="10" fill="#ffffff" stroke="#fca5a5" stroke-width="1.5"/>
+                  <text x="416" y="64" text-anchor="middle" font-size="12.5" font-weight="700" fill="#b91c1c">PATOFISIOLOGI (DM)</text>
+
+                  <rect x="312" y="80" width="208" height="52" rx="8" fill="#fee2e2" stroke="#f87171"/>
+                  <text x="416" y="99" text-anchor="middle" font-size="11" font-weight="700" fill="#991b1b">Defisiensi / Resistensi Insulin</text>
+                  <text x="416" y="114" text-anchor="middle" font-size="9.5" fill="#7f1d1d">E10: Destruksi autoimun sel beta</text>
+                  <text x="416" y="126" text-anchor="middle" font-size="9.5" fill="#7f1d1d">E11: Resistensi reseptor perifer</text>
+
+                  <line x1="416" y1="132" x2="416" y2="154" stroke="#dc2626" stroke-width="2" marker-end="url(#arrowRed)"/>
+
+                  <rect x="312" y="158" width="208" height="48" rx="8" fill="#ffedd5" stroke="#fb923c"/>
+                  <text x="416" y="177" text-anchor="middle" font-size="11.5" font-weight="700" fill="#9a3412">Hiperglikemia Kronis</text>
+                  <text x="416" y="193" text-anchor="middle" font-size="9.8" fill="#7c2d12">Glukosa menumpuk di aliran darah</text>
+
+                  <line x1="416" y1="206" x2="416" y2="228" stroke="#dc2626" stroke-width="2" marker-end="url(#arrowRed)"/>
+
+                  <rect x="312" y="232" width="208" height="72" rx="8" fill="#fef2f2" stroke="#ef4444"/>
+                  <text x="416" y="250" text-anchor="middle" font-size="11" font-weight="700" fill="#991b1b">Kerusakan Mikrovaskular</text>
+                  <text x="416" y="266" text-anchor="middle" font-size="9.8" fill="#450a0a">• Retina → Retinopati (E10.3† H36.0*)</text>
+                  <text x="416" y="280" text-anchor="middle" font-size="9.8" fill="#450a0a">• Saraf → Neuropati (E10.4† G63.2*)</text>
+                  <text x="416" y="294" text-anchor="middle" font-size="9.8" fill="#450a0a">• Perifer → Gangren/Ulkus (E14.5)</text>
+                </svg>
+                <figcaption>Gambar: Mekanisme homeostasis glukosa oleh pankreas dan jalur komplikasi pada Diabetes Melitus.</figcaption>
+              </figure>
+
+              <div class="science-text-col">
+                <div class="bio-block">
+                  <h5>Anatomi Sistem Endokrin Terkait</h5>
+                  <p>Organ kunci Bab IV meliputi <strong>kelenjar tiroid</strong> (di anterior leher, penghasil T3/T4), <strong>pankreas endokrin</strong> (Pulau Langerhans sel beta penghasil insulin), serta <strong>hipofisis posterior</strong> pengatur hormon ADH.</p>
+                </div>
+                <div class="bio-block">
+                  <h5>Fisiologi Normal</h5>
+                  <p>Insulin membuka kanal GLUT-4 agar glukosa masuk ke sel otot dan jaringan adiposa. Hormon tiroid mengatur laju metabolisme basal serta perkembangan otak janin, sementara ADH menjaga reabsorpsi air di ginjal.</p>
+                </div>
+                <div class="bio-block">
+                  <h5>Patofisiologi Penyakit Contoh</h5>
+                  <p>Pada <strong>DM Tipe 1 (<code>E10</code>)</strong> defisiensi insulin memicu hiperglikemia dan kerusakan kapiler retina/saraf. Pada <strong>Defisiensi Yodium Kongenital (<code>E00.0/E00.1</code>)</strong> kurangnya T4 mengganggu maturasi saraf dan memicu retardasi mental, sedangkan defisit ADH memicu <strong>Diabetes Insipidus (<code>E23.2</code>)</strong>.</p>
+                </div>
+              </div>
+            </div>
+
+            <h4>B. Profil Penyakit Contoh &amp; Keterkaitan Klasifikasi Bab IV</h4>
+            <div class="disease-profile-grid">
+              <article class="disease-profile-card">
+                <div class="disease-profile-head">
+                  <h5>Diabetes Melitus Tipe 1 dengan Retinopati</h5>
+                  <code>E10.3† H36.0*</code>
+                </div>
+                <p><strong>Definisi Ringkas:</strong> Gangguan metabolik kronis akibat destruksi autoimun sel beta pankreas sehingga menyebabkan hiperglikemia persisten yang merusak mikrovaskular retina.</p>
+                <p><strong>Keterkaitan Bab ICD:</strong> Etiologi DM Tipe 1 diklasifikasikan di Bab IV (<code>E10.3†</code>), sedangkan manifestasi pada retina dikodekan berpasangan ke Bab VII (<code>H36.0*</code>).</p>
+              </article>
+              <article class="disease-profile-card">
+                <div class="disease-profile-head">
+                  <h5>Sindrom Defisiensi Yodium Kongenital (Tipe Miksedematosa / Neurologis)</h5>
+                  <code>E00.0 / E00.1</code>
+                </div>
+                <p><strong>Definisi Ringkas:</strong> Hipotiroidisme bawaan akibat kekurangan yodium berat pada fase perkembangan janin sehingga mengganggu metabolisme sel dan maturasi otak.</p>
+                <p><strong>Keterkaitan Bab ICD:</strong> Masuk blok gangguan tiroid Bab IV (<code>E00–E07</code>), dengan kode tambahan derajat retardasi mental dari Bab V (<code>F70–F73</code>).</p>
+              </article>
+              <article class="disease-profile-card">
+                <div class="disease-profile-head">
+                  <h5>Marasmus–Kwashiorkor</h5>
+                  <code>E42</code>
+                </div>
+                <p><strong>Definisi Ringkas:</strong> Malnutrisi energi–protein berat yang menggabungkan pengecilan massa otot/lemak ekstrem (marasmus) dan edema akibat hipoalbuminemia (kwashiorkor).</p>
+                <p><strong>Keterkaitan Bab ICD:</strong> Blok Malnutrition (<code>E40–E46</code>) pada Bab IV menyediakan kode kombinasi tunggal <code>E42</code> agar tidak dikode ganda terpisah.</p>
+              </article>
+              <article class="disease-profile-card">
+                <div class="disease-profile-head">
+                  <h5>Diabetes Insipidus Sentral</h5>
+                  <code>E23.2</code>
+                </div>
+                <p><strong>Definisi Ringkas:</strong> Ketidakmampuan ginjal memekatkan urin akibat defisiensi sekresi hormon antidiuretik (ADH/vasopresin) dari hipofisis posterior sehingga terjadi poliuria dan polidipsia.</p>
+                <p><strong>Keterkaitan Bab ICD:</strong> Diklasifikasikan pada blok gangguan kelenjar endokrin lain Bab IV (<code>E20–E35</code>), berbeda dari Diabetes Melitus (<code>E10–E14</code>).</p>
+              </article>
+            </div>
+
+            <h4>C. Tabel Bedah Terminologi Medis &amp; Kaitan Diagram Anatomi (Bab IV)</h4>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Istilah Medis</th>
+                    <th>Prefix</th>
+                    <th>Root / Combining Form</th>
+                    <th>Suffix</th>
+                    <th>Organ / Struktur Terkait (Diagram)</th>
+                    <th>Makna Klinis &amp; Kaitannya dengan Bab IV</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>Hyperglycaemia</strong></td><td><code>hyper-</code></td><td><code>glyc/o</code></td><td><code>-aemia</code></td><td>Pankreas (Sel Beta Pulau Langerhans)</td><td>Kadar glukosa darah di atas normal (<code>E10–E14</code>).</td></tr>
+                  <tr><td><strong>Retinopathy</strong></td><td>—</td><td><code>retin/o</code></td><td><code>-pathy</code></td><td>Retina Bola Mata (Komplikasi Mikrovaskular)</td><td>Kerusakan kapiler retina akibat DM (<code>H36.0*</code>).</td></tr>
+                  <tr><td><strong>Polyneuropathy</strong></td><td><code>poly-</code></td><td><code>neur/o</code></td><td><code>-pathy</code></td><td>Saraf Perifer Ekstremitas</td><td>Gangguan beberapa saraf perifer sekaligus (<code>G63.2*</code>).</td></tr>
+                  <tr><td><strong>Thyroiditis</strong></td><td>—</td><td><code>thyroid/o</code></td><td><code>-itis</code></td><td>Kelenjar Tiroid (Lobus Kanan &amp; Kiri)</td><td>Peradangan/abses kelenjar tiroid (<code>E06.0</code>).</td></tr>
+                  <tr><td><strong>Myxoedema</strong></td><td>—</td><td><code>myx/o</code></td><td><code>-edema</code></td><td>Kelenjar Tiroid &amp; Hipofisis (T3/T4)</td><td>Pembengkakan jaringan akibat hipotiroid berat (<code>E00.1</code>).</td></tr>
+                </tbody>
+              </table>
+            </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 4.4: FARMAKOLOGI BAB IV -->
+        <div id="ch4-pharma" class="subtab-panel">
+          <div class="who-sheet">
+            <div class="who-watermark" aria-hidden="true">Pharmacology</div>
+            <div class="who-sheet-body inner-flat">
+            <div class="disclaimer-banner">
+              <strong>Catatan Batasan Edukatif (Non-Resep):</strong> Bagian ini menyajikan keterkaitan golongan, nama generik, contoh nama dagang, bentuk sediaan, rute pemberian, dan mekanisme kerja obat terhadap patofisiologi penyakit pada Bab IV semata-mata untuk pemahaman akademik mahasiswa RMIK, <em>tanpa mencantumkan aturan dosis, jumlah obat, maupun saran terapi klinis pasien</em>.
+            </div>
+
+            <div class="pharma-diag-grid">
+              <article class="pharma-diag-card">
+                <div class="pharma-diag-head">
+                  <div class="pharma-organ-circle" aria-hidden="true">
+                    <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                      <path d="M5 18C9 15 17 15 26 11C28 11 29 14 26 17C22 20 14 22 7 23C4 23 3 19 5 18Z" fill="#fde68a" stroke="#0369a1" stroke-width="1.8" />
+                      <circle cx="15" cy="17" r="2" fill="#0284c7" />
+                      <circle cx="21" cy="15" r="1.5" fill="#0284c7" />
+                    </svg>
+                  </div>
+                  <div>
+                    <span class="pharma-diag-eyebrow">DIAGNOSIS:</span>
+                    <h5>Diabetes Melitus &amp; Komplikasi (E10–E14)</h5>
+                  </div>
+                </div>
+
+                <div class="pharma-drug-row">
+                  <div class="pharma-drug-icon" aria-hidden="true">
+                    <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                      <rect x="11" y="10" width="10" height="17" rx="2.5" fill="#fef3c7" stroke="#64748b" stroke-width="1.6" />
+                      <rect x="12" y="5" width="8" height="5" rx="1" fill="#92400e" />
+                      <rect x="12" y="15" width="8" height="7" fill="#ffffff" stroke="#cbd5e1" />
+                    </svg>
+                  </div>
+                  <div class="pharma-drug-body">
+                    <h6>Insulin (Insulin Lispro / Insulin Glargine)</h6>
+                    <ul class="pharma-drug-bullets">
+                      <li><strong>Nama Generik:</strong> Insulin Lispro / Insulin Glargine (Dagang: Humalog / Lantus · Sediaan: Larutan injeksi subkutan).</li>
+                      <li><strong>Golongan Farmakologis:</strong> Hormon Pankreas / Antidiabetik Parenteral.</li>
+                      <li><strong>Penyakit Terkait:</strong> Diabetes Melitus Tipe 1 (<code>E10.-</code>), Retinopati (<code>E10.3† H36.0*</code>), &amp; Polineuropati (<code>E10.4† G63.2*</code>).</li>
+                      <li><strong>Kegunaan Umum:</strong> Menggantikan hormon insulin endogen yang tidak lagi diproduksi oleh sel beta pankreas.</li>
+                      <li><strong>Mekanisme Edukatif Obat–Penyakit:</strong> Berikatan dengan reseptor insulin pada sel otot, hati, dan adiposa untuk memicu translokasi GLUT-4 sehingga glukosa masuk ke sel dan menekan glukoneogenesis hati.</li>
+                      <li class="pharma-drug-ref"><strong>Sumber Rujukan Ilmiah:</strong> <em>Katzung, Basic &amp; Clinical Pharmacology; WHO ICD-10 Bab IV.</em></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="pharma-drug-row">
+                  <div class="pharma-drug-icon" aria-hidden="true">
+                    <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                      <circle cx="16" cy="16" r="10" fill="#f1f5f9" stroke="#64748b" stroke-width="1.8" />
+                      <line x1="9" y1="21" x2="23" y2="11" stroke="#94a3b8" stroke-width="1.8" />
+                    </svg>
+                  </div>
+                  <div class="pharma-drug-body">
+                    <h6>Metformin</h6>
+                    <ul class="pharma-drug-bullets">
+                      <li><strong>Nama Generik:</strong> Metformin (Dagang: Glucophage / Forbetes · Sediaan: Tablet salut selaput oral).</li>
+                      <li><strong>Golongan Farmakologis:</strong> Antidiabetik Oral (Biguanide).</li>
+                      <li><strong>Penyakit Terkait:</strong> Diabetes Melitus Tipe 2 (<code>E11.-</code>).</li>
+                      <li><strong>Kegunaan Umum:</strong> Membantu mengendalikan kadar glukosa darah pada kondisi resistensi insulin.</li>
+                      <li><strong>Mekanisme Edukatif Obat–Penyakit:</strong> Mengaktivasi AMPK di hati untuk menekan glukoneogenesis hepatik dan meningkatkan sensitivitas jaringan perifer terhadap insulin.</li>
+                      <li class="pharma-drug-ref"><strong>Sumber Rujukan Ilmiah:</strong> <em>Katzung, Basic &amp; Clinical Pharmacology.</em></li>
+                    </ul>
+                  </div>
+                </div>
+              </article>
+
+              <article class="pharma-diag-card">
+                <div class="pharma-diag-head">
+                  <div class="pharma-organ-circle" aria-hidden="true">
+                    <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                      <path d="M16 7V25 M16 14C12 10 8 12 9 17C10 21 14 21 16 18C18 21 22 21 23 17C24 12 20 10 16 14Z" fill="#fecaca" stroke="#b91c1c" stroke-width="1.6" />
+                    </svg>
+                  </div>
+                  <div>
+                    <span class="pharma-diag-eyebrow">DIAGNOSIS:</span>
+                    <h5>Gangguan Tiroid, Hipofisis &amp; Nutrisi (E00–E06, E23, E42, E87)</h5>
+                  </div>
+                </div>
+
+                <div class="pharma-drug-row">
+                  <div class="pharma-drug-icon" aria-hidden="true">
+                    <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                      <circle cx="16" cy="16" r="10" fill="#f1f5f9" stroke="#64748b" stroke-width="1.8" />
+                      <line x1="9" y1="21" x2="23" y2="11" stroke="#94a3b8" stroke-width="1.8" />
+                    </svg>
+                  </div>
+                  <div class="pharma-drug-body">
+                    <h6>Levothyroxine (L-T4)</h6>
+                    <ul class="pharma-drug-bullets">
+                      <li><strong>Nama Generik:</strong> Levothyroxine Sodium (Dagang: Euthyrox / Thyrax · Sediaan: Tablet oral).</li>
+                      <li><strong>Golongan Farmakologis:</strong> Terapi Pengganti Hormon Tiroid.</li>
+                      <li><strong>Penyakit Terkait:</strong> Hipotiroidisme &amp; Sindrom Defisiensi Yodium Kongenital (<code>E00.0, E00.1</code>).</li>
+                      <li><strong>Kegunaan Umum:</strong> Menggantikan defisiensi hormon tiroksin agar laju metabolisme berjalan normal dan menunjang maturasi saraf.</li>
+                      <li><strong>Mekanisme Edukatif Obat–Penyakit:</strong> Diubah menjadi T3 di jaringan perifer lalu berikatan dengan reseptor tiroid inti sel untuk meregulasi gen metabolisme dan perkembangan sistem saraf.</li>
+                      <li class="pharma-drug-ref"><strong>Sumber Rujukan Ilmiah:</strong> <em>Katzung, Thyroid &amp; Antithyroid Drugs; WHO EML.</em></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="pharma-drug-row">
+                  <div class="pharma-drug-icon" aria-hidden="true">
+                    <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                      <g transform="rotate(-38 16 16)">
+                        <rect x="6" y="10" width="20" height="12" rx="6" fill="#0d9488" stroke="#475569" stroke-width="1.5" />
+                        <path d="M16 10H20A6 6 0 0 1 20 22H16V10Z" fill="#f8fafc" />
+                      </g>
+                    </svg>
+                  </div>
+                  <div class="pharma-drug-body">
+                    <h6>Desmopressin (DDAVP)</h6>
+                    <ul class="pharma-drug-bullets">
+                      <li><strong>Nama Generik:</strong> Desmopressin Acetate (Dagang: Minirin · Sediaan: Tablet / Semprot hidung).</li>
+                      <li><strong>Golongan Farmakologis:</strong> Analog Hormon Antidiuretik / ADH (Vasopresin).</li>
+                      <li><strong>Penyakit Terkait:</strong> Diabetes Insipidus Sentral (<code>E23.2</code>).</li>
+                      <li><strong>Kegunaan Umum:</strong> Membantu memekatkan urin dan mencegah kehilangan cairan berlebih akibat kurangnya ADH.</li>
+                      <li><strong>Mekanisme Edukatif Obat–Penyakit:</strong> Agonis selektif reseptor V2 pada duktus kolektivus ginjal untuk membuka kanal akuaporin-2 sehingga reabsorpsi air meningkat.</li>
+                      <li class="pharma-drug-ref"><strong>Sumber Rujukan Ilmiah:</strong> <em>Katzung, Hypothalamic &amp; Pituitary Hormones.</em></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="pharma-drug-row">
+                  <div class="pharma-drug-icon" aria-hidden="true">
+                    <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                      <rect x="11" y="10" width="10" height="17" rx="2.5" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.6" />
+                      <rect x="12" y="5" width="8" height="5" rx="1" fill="#0369a1" />
+                      <rect x="12" y="15" width="8" height="7" fill="#ffffff" stroke="#bae6fd" />
+                    </svg>
+                  </div>
+                  <div class="pharma-drug-body">
+                    <h6>Larutan Elektrolit (NaCl / KCl) &amp; Formula Nutrisi Enteral</h6>
+                    <ul class="pharma-drug-bullets">
+                      <li><strong>Nama Generik:</strong> Larutan NaCl/KCl &amp; Formula F-75/F-100 (Sediaan: Infus IV &amp; cairan enteral NGT).</li>
+                      <li><strong>Golongan Farmakologis:</strong> Terapi Pengganti Cairan, Elektrolit &amp; Nutrisi Klinis.</li>
+                      <li><strong>Penyakit Terkait:</strong> Elektrolit Imbalance (<code>E87.8</code>) &amp; Marasmus-Kwashiorkor (<code>E42</code>).</li>
+                      <li><strong>Kegunaan Umum:</strong> Memulihkan keseimbangan ion plasma dan kecukupan makronutrien secara bertahap.</li>
+                      <li><strong>Mekanisme Edukatif Obat–Penyakit:</strong> Mengembalikan gradien ion transmembran (Na+, K+, Cl-) serta memperbaiki tekanan onkotik plasma dan sintesis protein (terkait ICD-9-CM <code>99.18</code> &amp; <code>96.6</code>).</li>
+                      <li class="pharma-drug-ref"><strong>Sumber Rujukan Ilmiah:</strong> <em>Kemenkes RI Tata Laksana Gizi Buruk; ICD-9-CM Vol. 3.</em></li>
+                    </ul>
+                  </div>
+                </div>
+              </article>
+            </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= VIEW: BAB V (F00-F99) ================= -->
+      <section id="view-chapter-5" class="app-view" aria-label="Bab V Gangguan Mental dan Perilaku">
+        <!-- Header Bab V -->
+        <div class="chapter-header ch5-header">
+          <div>
+            <span class="chapter-code-pill">BAB V · KODE F00–F99</span>
+            <h3>Mental and Behavioural Disorders</h3>
+            <p class="chapter-id-title">Gangguan Mental dan Perilaku — Kaidah Kodifikasi Psikiatri, Neurobiologi, &amp; Psikofarmaka Edukatif</p>
+          </div>
+          <div class="chapter-meta">
+            <span>10 Blok Utama</span>
+            <span>Psikoterapi ICD-9-CM</span>
+          </div>
+        </div>
+
+        <!-- 4 Sub-Tab Bab V + Exercises -->
+        <div class="subtab-bar" role="tablist" aria-label="Sub-menu Bab V">
+          <button class="subtab-btn active" data-chapter="5" data-tab="pengantar" role="tab" aria-selected="true" type="button">1. Overview</button>
+          <button class="subtab-btn" data-chapter="5" data-tab="coding" role="tab" aria-selected="false" type="button">2. Coding Review</button>
+          <button class="subtab-btn" data-chapter="5" data-tab="science" role="tab" aria-selected="false" type="button">3. Medical Science</button>
+          <button class="subtab-btn" data-chapter="5" data-tab="pharma" role="tab" aria-selected="false" type="button">4. Pharmacology</button>
+          <button class="subtab-btn who-exercise-jump" data-filter="bab5" type="button">5. Exercises →</button>
+        </div>
+
+        <!-- TAB 5.1: PENGANTAR BAB V -->
+        <div id="ch5-pengantar" class="subtab-panel active">
+          <div class="who-sheet">
+            <div class="who-watermark teal" aria-hidden="true">Overview</div>
+            <div class="who-sheet-body">
+              <div class="overview-split-grid">
+                <aside class="who-summary-card teal" aria-label="Ringkasan Klasifikasi WHO Bab V">
+                  <div>
+                    <span class="who-summary-eyebrow">CHAPTER V · F00–F99</span>
+                    <h5>Mental and Behavioural Disorders</h5>
+                    <p class="who-summary-sub">Gangguan Mental dan Perilaku</p>
+                  </div>
+
+                  <div>
+                    <span class="who-summary-label">Incl. (Termasuk dalam Bab)</span>
+                    <ul>
+                      <li>Gangguan perkembangan psikologis (F80–F89) &amp; retardasi mental (F70–F79).</li>
+                      <li>Gangguan akibat zat psikoaktif (F10–F19), spektrum psikotik (F20–F29), dan afektif (F30–F39).</li>
+                      <li>Gangguan neurotik/stres/fobia (F40–F48) &amp; sindrom perilaku terkait masa nifas (F50–F59).</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <span class="who-summary-label warn">Excl. (Dikecualikan dari Bab)</span>
+                    <ul>
+                      <li>Gejala, tanda, &amp; temuan klinis tanpa diagnosis psikiatri definitif (mis. halusinasi visual tunggal → <code>R44.1</code>).</li>
+                      <li>Demensia akibat penyakit organik/infeksi harus memakai pasangan etiologi-manifestasi (†/*).</li>
+                      <li>Gangguan neurologis primer tanpa manifestasi mental/perilaku → Bab VI (<code>G00–G99</code>).</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <span class="who-summary-label">Blok Kode Utama (F00–F99)</span>
+                    <div class="who-block-mini"><code>F00–F09</code><span>Organic, including symptomatic, mental</span></div>
+                    <div class="who-block-mini"><code>F10–F19</code><span>Psychoactive substance use disorders</span></div>
+                    <div class="who-block-mini"><code>F20–F29</code><span>Schizophrenia, schizotypal &amp; delusional</span></div>
+                    <div class="who-block-mini"><code>F30–F39</code><span>Mood [affective] disorders</span></div>
+                    <div class="who-block-mini"><code>F40–F48</code><span>Neurotic, stress-related &amp; somatoform</span></div>
+                    <div class="who-block-mini"><code>F50–F59</code><span>Behavioural syndromes &amp; physiological</span></div>
+                    <div class="who-block-mini"><code>F60–F69</code><span>Disorders of adult personality</span></div>
+                    <div class="who-block-mini"><code>F70–F79</code><span>Mental retardation (IQ F70–F73)</span></div>
+                    <div class="who-block-mini"><code>F80–F89</code><span>Disorders of psychological development</span></div>
+                    <div class="who-block-mini"><code>F90–F99</code><span>Childhood/adolescence onset &amp; NOS</span></div>
+                  </div>
+
+                  <div class="who-dagger-box">
+                    <span class="who-summary-label">Kategori Dagger (†) &amp; Asterisk (*) Relevan</span>
+                    <ul>
+                      <li><code>G30.0† / G30.1†</code> → <code>F00.0* / F00.1*</code> Demensia pada penyakit Alzheimer</li>
+                      <li><code>B22.0†</code> → <code>F02.4*</code> Demensia pada penyakit HIV</li>
+                      <li><code>G20†</code> → <code>F02.3*</code> Demensia pada penyakit Parkinson</li>
+                      <li><code>G40.-†</code> → <code>F02.8*</code> Demensia pada kondisi lain</li>
+                    </ul>
+                  </div>
+                </aside>
+
+                <div>
+                  <h4>Tujuan Pembelajaran Bab V (F00–F99)</h4>
+                  <ul class="clean-list">
+                    <li>Mengidentifikasi pembagian blok gangguan mental dan perilaku dalam rentang kode <code>F00–F99</code> pada ICD-10 versi 2010.</li>
+                    <li>Membedakan diagnosis psikiatri definitif dengan gejala tunggal seperti halusinasi visual terisolasi (<code>R44.1</code>).</li>
+                    <li>Menerapkan kaidah khusus seperti gangguan nifas (<code>F53.0</code>), ketergantungan tembakau (<code>F17.2</code>), fobia spesifik (<code>F40.2</code>), derajat retardasi mental (<code>F70–F73</code>), dan pasangan Dagger/Asterisk demensia HIV (<code>B22.0† F02.4*</code>).</li>
+                    <li>Menelusuri kode prosedur kejiwaan pada <strong>ICD-9-CM Volume 3</strong> kategori 93–94 (<code>94.39</code>, <code>94.33</code>, <code>94.27</code>, <code>94.01</code>, <code>94.49</code>).</li>
+                  </ul>
+
+                  <div class="stats-callout">
+                    <h5>Konteks Statistik Pelayanan Kesehatan</h5>
+                    <p>
+                      Gangguan kesehatan jiwa berdampak besar terhadap beban <strong>morbiditas</strong> jangka panjang (<em>Years Lived with Disability / YLD</em>) serta memengaruhi <strong>mortalitas</strong> tidak langsung akibat komplikasi penyerta dan risiko penyalahgunaan zat di layanan primer maupun rumah sakit jiwa. Dokumentasi yang akurat atas diagnosis Bab V serta pemisahan tindakan non-operatif kategori 93–94 ICD-9-CM menjamin validitas surveilans kesehatan jiwa nasional pada <strong>SATUSEHAT Kemenkes RI (ICD-10 versi 2010)</strong> dan ketepatan klaim <strong>INA-CBGs</strong>.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <h4>Anatomi Organ Kunci Bab V (F00–F99)</h4>
+              <div class="overview-anatomy-card teal">
+                <figure class="anatomy-img-box">
+                  <img src="images/anatomy_brain_synapse.jpg" alt="Anatomi Otak dan Sinaps Bab V: Korteks Prefrontal, Sistem Limbik, dan Neurotransmiter" />
+                  <figcaption>Struktur saraf kunci: Korteks Prefrontal (F20/F25), Sistem Limbik &amp; Amigdala (F31/F40/F53), dan Celah Sinaps.</figcaption>
+                </figure>
+                <div class="science-text-col">
+                  <div class="bio-block">
+                    <h5>Korteks Prefrontal &amp; Sistem Limbik</h5>
+                    <p>Korteks prefrontal mengatur penilaian realitas dan kognisi (<code>F20, F25, F00–F02</code>), sedangkan amigdala–hipokampus mengatur emosi, fobia (<code>F40.2</code>), dan mood (<code>F31.8, F53.0</code>).</p>
+                  </div>
+                  <div class="bio-block">
+                    <h5>Celah Sinaps &amp; Neurotransmiter</h5>
+                    <p>Keseimbangan sinyal kimia dopamin, serotonin, norepinefrin, dan GABA di celah sinaps menjadi dasar patofisiologi Bab V serta mekanisme psikofarmaka.</p>
+                  </div>
+                </div>
+              </div>
+
+              <h4>Rincian Blok Kode Utama Bab V (ICD-10 WHO 2010)</h4>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Rentang Blok</th>
+                      <th>Deskripsi Kelompok Gangguan</th>
+                      <th>Contoh Kondisi Klinis</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td><code>F00–F09</code></td><td>Organic, including symptomatic, mental disorders</td><td>Demensia pada penyakit HIV (<code>B22.0† F02.4*</code>)</td></tr>
+                    <tr><td><code>F10–F19</code></td><td>Mental and behavioural disorders due to psychoactive substance use</td><td>Ketergantungan tembakau/rokok (<code>F17.2</code>) disertai PPOK (<code>J44.9</code>)</td></tr>
+                    <tr><td><code>F20–F29</code></td><td>Schizophrenia, schizotypal and delusional disorders</td><td>Skizofrenia paranoid (<code>F20.0</code>), Skizoafektif tipe manik (<code>F25.0</code>)</td></tr>
+                    <tr><td><code>F30–F39</code></td><td>Mood [affective] disorders</td><td>Bipolar tipe II (<code>F31.8</code>), Episode depresif (<code>F32.-</code>)</td></tr>
+                    <tr><td><code>F40–F48</code></td><td>Neurotic, stress-related and somatoform disorders</td><td>Fobia spesifik ular (<code>F40.2</code>)</td></tr>
+                    <tr><td><code>F50–F59</code></td><td>Behavioural syndromes associated with physiological disturbances</td><td>Depresi pascamelahirkan ringan (<code>F53.0</code>)</td></tr>
+                    <tr><td><code>F60–F69</code></td><td>Disorders of adult personality and behaviour</td><td>Gangguan kepribadian emosional tak stabil (<code>F60.3</code>)</td></tr>
+                    <tr><td><code>F70–F79</code></td><td>Mental retardation</td><td>Retardasi mental berat IQ 20–34 (<code>F72</code>)</td></tr>
+                    <tr><td><code>F80–F89</code></td><td>Disorders of psychological development</td><td>Speech delay (<code>F80.9</code>), Gangguan membaca &amp; mengeja (<code>F81.0, F81.1</code>)</td></tr>
+                    <tr><td><code>F90–F99</code></td><td>Behavioural/emotional disorders with onset in childhood &amp; unspecified</td><td>Gangguan hiperkinetik/ADHD (<code>F90.-</code>)</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 5.2: CODING REVIEW BAB V (10 KASUS DI-RENDER OLEH SCRIPT.JS) -->
+        <div id="ch5-coding" class="subtab-panel">
+          <div class="who-sheet">
+            <div class="who-watermark teal" aria-hidden="true">Coding Review</div>
+            <div class="who-sheet-body inner-flat">
+            <h4>A. Ringkasan Aturan Bab, Lead Term &amp; Pemeriksaan Catatan Tabular (Bab V · F00–F99)</h4>
+            <div class="coding-kak-grid">
+              <div class="coding-kak-card">
+                <span class="coding-kak-eyebrow">1. Ringkasan Aturan Bab (WHO Vol. 2)</span>
+                <ul>
+                  <li>Gunakan Bab V hanya bila kondisi memenuhi kriteria diagnostik psikiatri klinis; <strong>gejala tunggal</strong> tanpa diagnosis pasti dikode ke Bab XVIII (<code>R44.1</code>).</li>
+                  <li>Terapkan karakter ke-4 <code>.0–.9</code> pada gangguan zat psikoaktif (<code>F10–F19</code>) sesuai pola penggunaan (<code>F17.2</code> ketergantungan).</li>
+                  <li>Pastikan etiologi organik mendahului manifestasi psikiatri pada kasus <strong>Dagger (†) &amp; Asterisk (*)</strong> seperti <code>B22.0† F02.4*</code>.</li>
+                </ul>
+              </div>
+              <div class="coding-kak-card teal">
+                <span class="coding-kak-eyebrow">2. Penentuan Lead Term &amp; Sumber Indeks</span>
+                <p>Telusuri istilah klinis pada <strong>ICD-10 Volume 3 (Section I)</strong> memakai kata kunci spesifik seperti <em>Depression</em> (<em>puerperal</em>), <em>Phobia</em> (<em>animal</em>), <em>Dependence</em> (<em>tobacco</em>), <em>Retardation</em> (<em>mental</em>), <em>Delay</em> (<em>speech</em>), atau <em>Dementia</em> (<em>in HIV</em>).</p>
+              </div>
+              <div class="coding-kak-card amber">
+                <span class="coding-kak-eyebrow">3. Pemeriksaan Catatan Tabular (Vol. 1)</span>
+                <p>Verifikasi catatan <strong>Includes</strong> pada <code>F31.8</code> (Bipolar II disorder) &amp; <code>F40.2</code> (Animal phobias), <strong>Excludes</strong> batas waktu 6 minggu nifas pada <code>F53.-</code>, serta skala skor IQ baku pada blok <code>F70–F73</code>.</p>
+              </div>
+            </div>
+
+            <div class="rules-grid">
+              <div class="rule-card rule-warn">
+                <h5>Catatan Excludes &amp; Batasan Penting</h5>
+                <ul>
+                  <li><strong>F53.- (Puerperium):</strong> Hanya untuk gangguan mental dalam 6 minggu pascapersalinan bila tidak memenuhi kriteria bagian lain Bab V.</li>
+                  <li><strong>Gejala Tunggal (R44.1):</strong> Halusinasi visual tanpa diagnosis psikiatri definitif dikode ke Bab XVIII (<code>R44.1</code>).</li>
+                  <li><strong>Bipolar II Disorder:</strong> Dalam ICD-10 2010 diklasifikasikan eksplisit pada <code>F31.8</code>.</li>
+                </ul>
+              </div>
+              <div class="rule-card rule-info">
+                <h5>Karakter ke-4 Blok F10–F19, Rentang IQ F70–F73 &amp; †/*</h5>
+                <ul>
+                  <li>Zat psikoaktif: <code>.0</code> intoksikasi, <code>.1</code> penggunaan merugikan, <code>.2</code> sindrom ketergantungan (mis. <code>F17.2</code>).</li>
+                  <li>Retardasi mental: <code>F70</code> (IQ 50–69), <code>F71</code> (IQ 35–49), <code>F72</code> (IQ 20–34), <code>F73</code> (IQ &lt;20).</li>
+                  <li>Demensia akibat HIV dikode berpasangan <code>B22.0† F02.4*</code>.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="icd9-subchapter-box">
+              <div class="icd9-subchapter-head">
+                <h5>Subbab ICD-9-CM Volume 3: Prosedur &amp; Tindakan Kejiwaan Bab V</h5>
+                <code>Terpisah dari Kode Diagnosis ICD-10</code>
+              </div>
+              <p><strong>Fungsi Kode Prosedur:</strong> Mendokumentasikan asesmen psikometri, wawancara psikiatri diagnostik, psikoterapi, maupun terapi somatik/rehabilitatif tanpa menggantikan kode diagnosis psikiatri Bab V.</p>
+              <p><strong>Contoh Tindakan Relevan &amp; Penelusuran:</strong> Untuk pasien depresi pascapersalinan (<code>F53.0</code>) yang menjalani sesi konseling individual → telusuri <em>Lead Term</em> <code>Psychotherapy</code> → <code>individual NEC</code> → verifikasi Daftar Tabular <code>94.39</code>. Untuk fobia spesifik ular (<code>F40.2</code>) → <code>Therapy</code> → <code>behavior</code> → <code>94.33</code>.</p>
+              <p><strong>Alasan Pemilihan Kode:</strong> Kategori <code>94.39</code> secara spesifik membedakan psikoterapi verbal individual dari terapi perilaku desensitisasi (<code>94.33</code>), terapi keluarga (<code>94.42</code>), atau konseling berhenti merokok (<code>94.49</code>).</p>
+            </div>
+
+            <h4>B. Studi Kasus Penelusuran Kode Diagnosis (ICD-10) &amp; Prosedur (ICD-9-CM) — 10 Kasus Bab V</h4>
+            <div id="ch5-cases-container" class="case-accordion"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 5.3: MEDICAL SCIENCE BAB V -->
+        <div id="ch5-science" class="subtab-panel">
+          <div class="who-sheet">
+            <div class="who-watermark teal" aria-hidden="true">Medical Science</div>
+            <div class="who-sheet-body inner-flat">
+            <h4>A. Gambar Anatomi Otak, Fisiologi &amp; Patofisiologi Gangguan Mental</h4>
+            <div class="anatomy-showcase teal">
+              <figure class="anatomy-img-box">
+                <img src="images/anatomy_brain_synapse.jpg" alt="Ilustrasi Anatomi Otak Bab V: Korteks Prefrontal, Sistem Limbik (Amigdala dan Hipokampus), serta Celah Sinaps Neurotransmiter" />
+                <figcaption>Gambar Anatomi Bab V: Korteks prefrontal (biru), sistem limbik/amigdala–hipokampus (amber), dan celah sinaps neurotransmiter.</figcaption>
+              </figure>
+              <div class="science-text-col with-watermark">
+                <svg class="science-bg-silhouette" viewBox="0 0 220 220" fill="none" aria-hidden="true">
+                  <path d="M56 146 C38 140, 32 114, 42 94 C34 64, 62 34, 102 36 C122 24, 162 28, 178 48 C202 58, 206 94, 188 120 C188 142, 166 154, 138 150 L124 150 L118 186 H92 L98 146 Z" stroke="#0d9488" stroke-width="4" />
+                  <path d="M84 96 C100 80, 132 82, 144 98 C134 114, 104 116, 84 96 Z" stroke="#0d9488" stroke-width="3" />
+                </svg>
+                <div class="bio-block">
+                  <h5>A. Korteks Prefrontal (PFC)</h5>
+                  <p>Pusat fungsi eksekutif, kontrol impuls, dan penilaian realitas. Gangguan jalur dopaminergik berperan pada skizofrenia/skizoafektif (<code>F20 / F25.0</code>).</p>
+                </div>
+                <div class="bio-block">
+                  <h5>B. Sistem Limbik (Amigdala &amp; Hipokampus)</h5>
+                  <p>Mengatur suasana perasaan dan respons takut. Hiperaktivasi amigdala memicu fobia spesifik (<code>F40.2</code>), sedangkan disregulasi limbik mendasari <code>F53.0</code> &amp; <code>F31.8</code>.</p>
+                </div>
+                <div class="bio-block">
+                  <h5>C. Celah Sinaps &amp; Neurotransmiter</h5>
+                  <p>Titik pelepasan dopamin, serotonin (5-HT), norepinefrin, dan GABA menuju reseptor postsinaps yang menjadi target kerja edukatif psikofarmaka.</p>
+                </div>
+              </div>
+            </div>
+            <div class="science-layout">
+              <figure class="svg-diagram-card">
+                <svg viewBox="0 0 560 340" role="img" aria-label="Diagram Sistem Saraf Pusat dan Transmisi Neurotransmiter di Celah Sinaps">
+                  <defs>
+                    <linearGradient id="bgGrad5" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stop-color="#f0fdfa" />
+                      <stop offset="100%" stop-color="#e0f2fe" />
+                    </linearGradient>
+                    <marker id="arrowTeal" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                      <path d="M0,0 L6,3 L0,6 Z" fill="#0f766e" />
+                    </marker>
+                  </defs>
+                  <rect width="560" height="340" rx="12" fill="url(#bgGrad5)" stroke="#99f6e4" stroke-width="1.5"/>
+                  <text x="280" y="26" text-anchor="middle" font-size="14" font-weight="700" fill="#134e4a">Regio Otak &amp; Mekanisme Neurotransmiter pada Bab V</text>
+
+                  <rect x="20" y="42" width="248" height="280" rx="10" fill="#ffffff" stroke="#5eead4" stroke-width="1.5"/>
+                  <text x="144" y="64" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0f766e">AREA OTAK KUNCI</text>
+
+                  <path d="M75,155 C60,115 95,82 145,84 C195,85 225,112 220,152 C216,178 195,188 175,188 L155,208 L138,208 L135,185 C105,188 84,178 75,155 Z" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/>
+                  <circle cx="98" cy="132" r="14" fill="#38bdf8" opacity="0.85"/>
+                  <text x="98" y="136" text-anchor="middle" font-size="9" font-weight="700" fill="#ffffff">PFC</text>
+                  <ellipse cx="146" cy="144" rx="22" ry="13" fill="#f59e0b" opacity="0.85"/>
+                  <text x="146" y="147" text-anchor="middle" font-size="8.5" font-weight="700" fill="#ffffff">Limbik</text>
+
+                  <rect x="34" y="220" width="220" height="90" rx="8" fill="#f8fafc" stroke="#cbd5e1"/>
+                  <text x="44" y="238" font-size="10.2" font-weight="700" fill="#0284c7">• Korteks Prefrontal (PFC):</text>
+                  <text x="44" y="252" font-size="9.5" fill="#334155">Fungsi eksekutif, kontrol impuls, realitas.</text>
+                  <text x="44" y="270" font-size="10.2" font-weight="700" fill="#b45309">• Sistem Limbik &amp; Amigdala:</text>
+                  <text x="44" y="284" font-size="9.5" fill="#334155">Regulasi emosi, rasa takut (fobia),</text>
+                  <text x="44" y="297" font-size="9.5" fill="#334155">suasana perasaan (depresi/bipolar).</text>
+
+                  <rect x="292" y="42" width="248" height="280" rx="10" fill="#ffffff" stroke="#7dd3fc" stroke-width="1.5"/>
+                  <text x="416" y="64" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0369a1">TRANSMISI SINAPS</text>
+
+                  <path d="M366,78 L466,78 L454,132 C448,148 384,148 378,132 Z" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.8"/>
+                  <text x="416" y="102" text-anchor="middle" font-size="10.5" font-weight="700" fill="#0c4a6e">Terminal Presinaps</text>
+                  <text x="416" y="117" text-anchor="middle" font-size="9" fill="#334155">(Melepas Neurotransmiter)</text>
+
+                  <circle cx="395" cy="156" r="4" fill="#0d9488"/>
+                  <circle cx="416" cy="160" r="4" fill="#2563eb"/>
+                  <circle cx="436" cy="155" r="4" fill="#d97706"/>
+                  <line x1="416" y1="142" x2="416" y2="168" stroke="#0f766e" stroke-width="1.5" marker-end="url(#arrowTeal)"/>
+
+                  <path d="M356,178 C385,170 447,170 476,178 L482,216 L350,216 Z" fill="#dcfce7" stroke="#16a34a" stroke-width="1.8"/>
+                  <text x="416" y="198" text-anchor="middle" font-size="10.5" font-weight="700" fill="#166534">Reseptor Postsinaps</text>
+
+                  <rect x="306" y="226" width="220" height="84" rx="8" fill="#f0fdf4" stroke="#86efac"/>
+                  <text x="316" y="244" font-size="10" font-weight="700" fill="#0f766e">Ketidakseimbangan Sinyal Kimia:</text>
+                  <text x="316" y="260" font-size="9.5" fill="#1e293b">• ↑ Dopamin mesolimbik → Psikosis (F20/F25)</text>
+                  <text x="316" y="275" font-size="9.5" fill="#1e293b">• ↓ Serotonin/NE → Depresi (F53.0/F31.8)</text>
+                  <text x="316" y="290" font-size="9.5" fill="#1e293b">• ↓ Aktivitas GABA → Fobia spesifik (F40.2)</text>
+                </svg>
+                <figcaption>Gambar: Hubungan korteks prefrontal–sistem limbik dan peran neurotransmiter di celah sinaps pada Bab V.</figcaption>
+              </figure>
+
+              <div class="science-text-col">
+                <div class="bio-block">
+                  <h5>Anatomi Sistem Saraf Terkait</h5>
+                  <p>Perilaku, emosi, dan kognisi diatur oleh <strong>korteks prefrontal</strong> (penalaran &amp; persepsi realitas), <strong>sistem limbik</strong> (amigdala &amp; hipokampus sebagai pusat emosi dan respons takut), serta jaras dopaminergik mesolimbik.</p>
+                </div>
+                <div class="bio-block">
+                  <h5>Fisiologi Normal</h5>
+                  <p>Neurotransmiter <strong>serotonin (5-HT)</strong> dan <strong>norepinefrin</strong> menjaga stabilitas mood, <strong>dopamin</strong> mengatur motivasi serta pemrosesan realitas, dan <strong>GABA</strong> menghambat eksitasi kecemasan berlebih.</p>
+                </div>
+                <div class="bio-block">
+                  <h5>Patofisiologi Penyakit Contoh</h5>
+                  <p>Hiperaktivitas dopamin mesolimbik memicu gejala psikotik pada <strong>Skizofrenia/Skizoafektif (<code>F20/F25.0</code>)</strong>. Penurunan serotonin pascapersalinan berkaitan dengan <strong>Depresi Pascamelahirkan (<code>F53.0</code>)</strong>, dan hiperaktivasi amigdala memicu <strong>Fobia Spesifik (<code>F40.2</code>)</strong>.</p>
+                </div>
+              </div>
+            </div>
+
+            <h4>B. Profil Penyakit Contoh &amp; Keterkaitan Klasifikasi Bab V</h4>
+            <div class="disease-profile-grid">
+              <article class="disease-profile-card">
+                <div class="disease-profile-head">
+                  <h5>Depresi Setelah Melahirkan (Postpartum Depression)</h5>
+                  <code>F53.0</code>
+                </div>
+                <p><strong>Definisi Ringkas:</strong> Gangguan suasana perasaan depresif dalam masa nifas (&lt;6 minggu pascapersalinan) terkait fluktuasi hormonal pascaplasenta dan penurunan transmisi serotonin.</p>
+                <p><strong>Keterkaitan Bab ICD:</strong> Diklasifikasikan di blok <code>F50–F59</code> (<code>F53.0</code> untuk bentuk ringan/sedang), terpisah dari episode depresif umum (<code>F32.-</code>) bila onsetnya spesifik masa nifas.</p>
+              </article>
+              <article class="disease-profile-card">
+                <div class="disease-profile-head">
+                  <h5>Skizofrenia &amp; Skizoafektif Tipe Manik</h5>
+                  <code>F20 / F25.0</code>
+                </div>
+                <p><strong>Definisi Ringkas:</strong> Gangguan psikotik dengan distorsi pikiran dan persepsi akibat hiperaktivitas dopamin mesolimbik; tipe skizoafektif menampilkan gejala skizofrenia sekaligus episode manik.</p>
+                <p><strong>Keterkaitan Bab ICD:</strong> Berada pada blok <code>F20–F29</code> Bab V dengan pemisahan subtipe kategori 4-karakter seperti <code>F25.0</code>.</p>
+              </article>
+              <article class="disease-profile-card">
+                <div class="disease-profile-head">
+                  <h5>Fobia Spesifik (Animal Phobia)</h5>
+                  <code>F40.2</code>
+                </div>
+                <p><strong>Definisi Ringkas:</strong> Ketakutan irasional intens terhadap objek/situasi tertentu (mis. ular) akibat hiperaktivasi amigdala dan respons otonom simpatis.</p>
+                <p><strong>Keterkaitan Bab ICD:</strong> Masuk blok gangguan neurotik dan ansietas fobik (<code>F40–F48</code>) pada kategori <code>F40.2</code>.</p>
+              </article>
+              <article class="disease-profile-card">
+                <div class="disease-profile-head">
+                  <h5>Ketergantungan Tembakau dengan PPOK</h5>
+                  <code>F17.2 + J44.9</code>
+                </div>
+                <p><strong>Definisi Ringkas:</strong> Adiksi nikotin pada reseptor asetilkolin nikotinik otak yang mempertahankan perilaku merokok hingga memicu inflamasi kronis jalan napas.</p>
+                <p><strong>Keterkaitan Bab ICD:</strong> Aspek adiksi perilaku dikode ke Bab V (<code>F17.2</code>), sedangkan kelainan struktural paru dikode terpisah ke Bab X (<code>J44.9</code>).</p>
+              </article>
+            </div>
+
+            <h4>C. Tabel Bedah Terminologi Medis &amp; Kaitan Diagram Anatomi (Bab V)</h4>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Istilah Medis</th>
+                    <th>Prefix</th>
+                    <th>Root / Combining Form</th>
+                    <th>Suffix</th>
+                    <th>Organ / Struktur Terkait (Diagram)</th>
+                    <th>Makna Klinis &amp; Kaitannya dengan Bab V</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>Schizophrenia</strong></td><td>—</td><td><code>schiz/o</code> + <code>phren/o</code></td><td><code>-ia</code></td><td>Korteks Prefrontal &amp; Jaras Dopamin</td><td>Disorganisasi proses pikir, persepsi, dan afek (<code>F20–F25</code>).</td></tr>
+                  <tr><td><strong>Claustrophobia</strong></td><td>—</td><td><code>claustr/o</code> + <code>phob/o</code></td><td><code>-ia</code></td><td>Sistem Limbik (Amigdala)</td><td>Ketakutan irasional pada ruang tertutup/objek spesifik (<code>F40.2</code>).</td></tr>
+                  <tr><td><strong>Psychotherapy</strong></td><td>—</td><td><code>psych/o</code> + <code>therap/o</code></td><td><code>-y</code></td><td>Korteks Prefrontal &amp; Sistem Limbik</td><td>Terapi psikologis; dikode di ICD-9-CM (<code>94.3-</code>, <code>94.4-</code>).</td></tr>
+                  <tr><td><strong>Postpartum</strong></td><td><code>post-</code></td><td><code>part/o</code></td><td><code>-um</code></td><td>Sistem Limbik &amp; Sinaps Serotonin</td><td>Periode pascapersalinan yang menjadi acuan kategori <code>F53.-</code>.</td></tr>
+                  <tr><td><strong>Anhedonia</strong></td><td><code>an-</code></td><td><code>hedon/o</code></td><td><code>-ia</code></td><td>Celah Sinaps (Dopamin–Serotonin)</td><td>Hilangnya minat/rasa senang (gejala depresi <code>F32/F53.0</code>).</td></tr>
+                </tbody>
+              </table>
+            </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 5.4: FARMAKOLOGI BAB V -->
+        <div id="ch5-pharma" class="subtab-panel">
+          <div class="who-sheet">
+            <div class="who-watermark teal" aria-hidden="true">Pharmacology</div>
+            <div class="who-sheet-body inner-flat">
+            <div class="disclaimer-banner">
+              <strong>Catatan Batasan Edukatif (Non-Resep):</strong> Uraian psikofarmaka berikut disusun sebagai konteks pembelajaran hubungan golongan, nama generik, contoh nama dagang, bentuk sediaan, rute pemberian, dan mekanisme obat dengan gangguan pada Bab V, <em>tanpa mencantumkan aturan dosis, jumlah obat, maupun saran terapi klinis pasien</em>.
+            </div>
+
+            <div class="pharma-diag-grid">
+              <article class="pharma-diag-card">
+                <div class="pharma-diag-head">
+                  <div class="pharma-organ-circle" aria-hidden="true">
+                    <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                      <path d="M8 22C6 18 8 11 14 10C17 8 22 9 24 13C26 17 24 22 20 22H8Z" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.8" />
+                      <circle cx="14" cy="15" r="2.2" fill="#0284c7" />
+                    </svg>
+                  </div>
+                  <div>
+                    <span class="pharma-diag-eyebrow">DIAGNOSIS:</span>
+                    <h5>Gangguan Psikotik &amp; Skizoafektif (F20, F25.0)</h5>
+                  </div>
+                </div>
+
+                <div class="pharma-drug-row">
+                  <div class="pharma-drug-icon" aria-hidden="true">
+                    <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                      <circle cx="16" cy="16" r="10" fill="#f1f5f9" stroke="#64748b" stroke-width="1.8" />
+                      <line x1="9" y1="21" x2="23" y2="11" stroke="#94a3b8" stroke-width="1.8" />
+                    </svg>
+                  </div>
+                  <div class="pharma-drug-body">
+                    <h6>Risperidone / Haloperidol</h6>
+                    <ul class="pharma-drug-bullets">
+                      <li><strong>Nama Generik:</strong> Risperidone / Haloperidol (Dagang: Risperdal / Serenace · Sediaan: Tablet / Injeksi IM).</li>
+                      <li><strong>Golongan Farmakologis:</strong> Antipsikotik Atipikal &amp; Tipikal.</li>
+                      <li><strong>Penyakit Terkait:</strong> Skizofrenia (<code>F20.-</code>) dan Gangguan Skizoafektif Tipe Manik (<code>F25.0</code>).</li>
+                      <li><strong>Kegunaan Umum:</strong> Meredakan gejala psikotik seperti halusinasi, waham, dan disorganisasi pikiran.</li>
+                      <li><strong>Mekanisme Edukatif Obat–Penyakit:</strong> Antagonis reseptor dopamin <code>D2</code> di jalur mesolimbik (dan <code>5-HT2A</code> pada golongan atipikal) untuk menormalkan transmisi sinyal yang berlebihan.</li>
+                      <li class="pharma-drug-ref"><strong>Sumber Rujukan Ilmiah:</strong> <em>Katzung, Antipsychotic Agents &amp; Lithium; WHO ICD-10 Bab V.</em></li>
+                    </ul>
+                  </div>
+                </div>
+              </article>
+
+              <article class="pharma-diag-card">
+                <div class="pharma-diag-head">
+                  <div class="pharma-organ-circle" aria-hidden="true">
+                    <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                      <circle cx="11" cy="16" r="5" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.6" />
+                      <circle cx="22" cy="16" r="5" fill="#fef3c7" stroke="#b45309" stroke-width="1.6" />
+                      <circle cx="16.5" cy="13" r="1.3" fill="#0d9488" />
+                      <circle cx="16.5" cy="18" r="1.3" fill="#0d9488" />
+                    </svg>
+                  </div>
+                  <div>
+                    <span class="pharma-diag-eyebrow">DIAGNOSIS:</span>
+                    <h5>Gangguan Mood, Depresi Nifas &amp; Fobia (F53.0, F31.8, F40.2)</h5>
+                  </div>
+                </div>
+
+                <div class="pharma-drug-row">
+                  <div class="pharma-drug-icon" aria-hidden="true">
+                    <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                      <g transform="rotate(-38 16 16)">
+                        <rect x="6" y="10" width="20" height="12" rx="6" fill="#0d9488" stroke="#475569" stroke-width="1.5" />
+                        <path d="M16 10H20A6 6 0 0 1 20 22H16V10Z" fill="#f8fafc" />
+                      </g>
+                    </svg>
+                  </div>
+                  <div class="pharma-drug-body">
+                    <h6>Sertraline / Fluoxetine</h6>
+                    <ul class="pharma-drug-bullets">
+                      <li><strong>Nama Generik:</strong> Sertraline / Fluoxetine (Dagang: Zoloft / Prozac · Sediaan: Tablet / Kapsul oral).</li>
+                      <li><strong>Golongan Farmakologis:</strong> Antidepresan (Golongan SSRI).</li>
+                      <li><strong>Penyakit Terkait:</strong> Depresi Pascamelahirkan (<code>F53.0</code>), Episode Depresif (<code>F32.-</code>), dan Fobia (<code>F40.-</code>).</li>
+                      <li><strong>Kegunaan Umum:</strong> Memulihkan regulasi suasana perasaan dan menurunkan kecemasan patologis.</li>
+                      <li><strong>Mekanisme Edukatif Obat–Penyakit:</strong> Menghambat transporter reuptake serotonin presinaps sehingga konsentrasi serotonin di celah sinaps meningkat.</li>
+                      <li class="pharma-drug-ref"><strong>Sumber Rujukan Ilmiah:</strong> <em>Katzung, Antidepressant Agents; Kemenkes RI.</em></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="pharma-drug-row">
+                  <div class="pharma-drug-icon" aria-hidden="true">
+                    <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                      <circle cx="16" cy="16" r="10" fill="#f1f5f9" stroke="#64748b" stroke-width="1.8" />
+                      <line x1="9" y1="21" x2="23" y2="11" stroke="#94a3b8" stroke-width="1.8" />
+                    </svg>
+                  </div>
+                  <div class="pharma-drug-body">
+                    <h6>Lithium Carbonate / Sodium Valproate</h6>
+                    <ul class="pharma-drug-bullets">
+                      <li><strong>Nama Generik:</strong> Lithium Carbonate / Sodium Valproate (Dagang: Frimania / Depakote · Sediaan: Tablet oral).</li>
+                      <li><strong>Golongan Farmakologis:</strong> Penstabil Suasana Hati (Mood Stabilizer).</li>
+                      <li><strong>Penyakit Terkait:</strong> Bipolar Tipe II (<code>F31.8</code>) dan Skizoafektif Tipe Manik (<code>F25.0</code>).</li>
+                      <li><strong>Kegunaan Umum:</strong> Mencegah fluktuasi ekstrem episode mania/hipomania dan depresi.</li>
+                      <li><strong>Mekanisme Edukatif Obat–Penyakit:</strong> Memodulasi jalur sinyal intraseluler serta meningkatkan aktivitas penghambat GABA.</li>
+                      <li class="pharma-drug-ref"><strong>Sumber Rujukan Ilmiah:</strong> <em>Katzung, Antipsychotic Agents &amp; Lithium; Stahl.</em></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="pharma-drug-row">
+                  <div class="pharma-drug-icon" aria-hidden="true">
+                    <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                      <circle cx="16" cy="16" r="10" fill="#f1f5f9" stroke="#64748b" stroke-width="1.8" />
+                      <line x1="9" y1="21" x2="23" y2="11" stroke="#94a3b8" stroke-width="1.8" />
+                    </svg>
+                  </div>
+                  <div class="pharma-drug-body">
+                    <h6>Lorazepam / Diazepam</h6>
+                    <ul class="pharma-drug-bullets">
+                      <li><strong>Nama Generik:</strong> Lorazepam / Diazepam (Dagang: Ativan / Valium · Sediaan: Tablet / Injeksi IV).</li>
+                      <li><strong>Golongan Farmakologis:</strong> Ansiolitik (Golongan Benzodiazepin).</li>
+                      <li><strong>Penyakit Terkait:</strong> Gangguan Ansietas Akut dan Fobia Berat (<code>F40.-</code>).</li>
+                      <li><strong>Kegunaan Umum:</strong> Memberikan efek menenangkan dan menurunkan hiperaktivitas saraf pada kondisi panik akut.</li>
+                      <li><strong>Mekanisme Edukatif Obat–Penyakit:</strong> Berikatan pada situs alosterik reseptor <code>GABA-A</code> dan meningkatkan pembukaan kanal ion klorida (<code>Cl-</code>).</li>
+                      <li class="pharma-drug-ref"><strong>Sumber Rujukan Ilmiah:</strong> <em>Katzung, Sedative-Hypnotic Drugs.</em></li>
+                    </ul>
+                  </div>
+                </div>
+              </article>
+            </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= VIEW: PHARMA TERPADU (BAB IV & V) ================= -->
+      <section id="view-pharma" class="app-view" aria-label="Farmakologi Edukatif Terpadu">
+        <div class="content-card">
+          <div class="section-banner">
+            <h3>Farmakologi Edukatif Terpadu (Bab IV &amp; Bab V)</h3>
+            <p>Pengelompokan obat menurut diagnosis: nama generik, contoh nama dagang, golongan farmakologis, bentuk sediaan &amp; rute, serta mekanisme kerja non-resep.</p>
+          </div>
+
+          <div class="disclaimer-banner">
+            <strong>Batasan Edukatif (Non-Resep):</strong> Informasi farmakologi ini disusun murni untuk menunjang pemahaman mahasiswa RMIK mengenai keterkaitan obat dengan diagnosis ICD-10, <em>tanpa mencantumkan aturan dosis, jumlah obat, maupun saran terapi klinis pasien</em>.
+          </div>
+
+          <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px;">
+            <button type="button" class="btn-secondary who-module-jump" data-target="view-chapter-4" data-title="Chapter IV — Endocrine, Nutritional and Metabolic Diseases (E00–E90)" style="padding:8px 14px;font-size:0.84rem;">Buka Bab IV (Anatomi &amp; Med. Science) →</button>
+            <button type="button" class="btn-secondary who-module-jump" data-target="view-chapter-5" data-title="Chapter V — Mental and Behavioural Disorders (F00–F99)" style="padding:8px 14px;font-size:0.84rem;">Buka Bab V (Anatomi &amp; Med. Science) →</button>
+          </div>
+
+          <h4 style="color:#00669E;margin:0 0 12px;">Bagian 1 — Farmakologi Bab IV (E00–E90)</h4>
+          <div class="pharma-diag-grid">
+            <article class="pharma-diag-card">
+              <div class="pharma-diag-head">
+                <div class="pharma-organ-circle" aria-hidden="true">
+                  <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                    <path d="M5 18C9 15 17 15 26 11C28 11 29 14 26 17C22 20 14 22 7 23C4 23 3 19 5 18Z" fill="#fde68a" stroke="#0369a1" stroke-width="1.8" />
+                    <circle cx="15" cy="17" r="2" fill="#0284c7" />
+                  </svg>
+                </div>
+                <div>
+                  <span class="pharma-diag-eyebrow">DIAGNOSIS:</span>
+                  <h5>Diabetes Melitus &amp; Komplikasi (E10–E14)</h5>
+                </div>
+              </div>
+              <div class="pharma-drug-row">
+                <div class="pharma-drug-icon" aria-hidden="true">
+                  <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                    <rect x="11" y="10" width="10" height="17" rx="2.5" fill="#fef3c7" stroke="#64748b" stroke-width="1.6" />
+                    <rect x="12" y="5" width="8" height="5" rx="1" fill="#92400e" />
+                  </svg>
+                </div>
+                <div class="pharma-drug-body">
+                  <h6>Insulin (Insulin Lispro / Insulin Glargine)</h6>
+                  <ul class="pharma-drug-bullets">
+                    <li><strong>Nama Generik:</strong> Insulin Lispro / Insulin Glargine (Dagang: Humalog / Lantus · Sediaan: Larutan injeksi subkutan).</li>
+                    <li><strong>Golongan Farmakologis:</strong> Hormon Pankreas / Antidiabetik Parenteral.</li>
+                    <li><strong>Penyakit Terkait:</strong> DM Tipe 1 (<code>E10.-</code>), Retinopati (<code>E10.3† H36.0*</code>).</li>
+                    <li><strong>Kegunaan Umum:</strong> Menggantikan hormon insulin endogen yang tidak lagi diproduksi oleh sel beta pankreas.</li>
+                    <li><strong>Mekanisme Edukatif Obat–Penyakit:</strong> Mengaktifkan reseptor insulin &amp; translokasi kanal GLUT-4 untuk ambilan glukosa seluler serta menekan glukoneogenesis hati.</li>
+                    <li class="pharma-drug-ref"><strong>Sumber Rujukan Ilmiah:</strong> <em>Katzung, Basic &amp; Clinical Pharmacology; WHO ICD-10 Bab IV.</em></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="pharma-drug-row">
+                <div class="pharma-drug-icon" aria-hidden="true">
+                  <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                    <circle cx="16" cy="16" r="10" fill="#f1f5f9" stroke="#64748b" stroke-width="1.8" />
+                    <line x1="9" y1="21" x2="23" y2="11" stroke="#94a3b8" stroke-width="1.8" />
+                  </svg>
+                </div>
+                <div class="pharma-drug-body">
+                  <h6>Metformin</h6>
+                  <ul class="pharma-drug-bullets">
+                    <li><strong>Nama Generik:</strong> Metformin (Dagang: Glucophage / Forbetes · Sediaan: Tablet salut selaput oral).</li>
+                    <li><strong>Golongan Farmakologis:</strong> Antidiabetik Oral (Biguanide).</li>
+                    <li><strong>Penyakit Terkait:</strong> DM Tipe 2 (<code>E11.-</code>).</li>
+                    <li><strong>Kegunaan Umum:</strong> Membantu mengendalikan kadar glukosa darah pada kondisi resistensi insulin.</li>
+                    <li><strong>Mekanisme Edukatif Obat–Penyakit:</strong> Mengaktivasi AMPK hati untuk menekan glukoneogenesis dan meningkatkan sensitivitas insulin perifer.</li>
+                    <li class="pharma-drug-ref"><strong>Sumber Rujukan Ilmiah:</strong> <em>Katzung, Basic &amp; Clinical Pharmacology.</em></li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            <article class="pharma-diag-card">
+              <div class="pharma-diag-head">
+                <div class="pharma-organ-circle" aria-hidden="true">
+                  <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                    <path d="M16 7V25 M16 14C12 10 8 12 9 17C10 21 14 21 16 18C18 21 22 21 23 17C24 12 20 10 16 14Z" fill="#fecaca" stroke="#b91c1c" stroke-width="1.6" />
+                  </svg>
+                </div>
+                <div>
+                  <span class="pharma-diag-eyebrow">DIAGNOSIS:</span>
+                  <h5>Gangguan Tiroid, Hipofisis &amp; Nutrisi (E00–E06, E23, E42, E87)</h5>
+                </div>
+              </div>
+              <div class="pharma-drug-row">
+                <div class="pharma-drug-icon" aria-hidden="true">
+                  <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                    <circle cx="16" cy="16" r="10" fill="#f1f5f9" stroke="#64748b" stroke-width="1.8" />
+                    <line x1="9" y1="21" x2="23" y2="11" stroke="#94a3b8" stroke-width="1.8" />
+                  </svg>
+                </div>
+                <div class="pharma-drug-body">
+                  <h6>Levothyroxine (L-T4)</h6>
+                  <ul class="pharma-drug-bullets">
+                    <li><strong>Nama Generik:</strong> Levothyroxine Sodium (Dagang: Euthyrox / Thyrax · Sediaan: Tablet oral).</li>
+                    <li><strong>Golongan Farmakologis:</strong> Terapi Pengganti Hormon Tiroid.</li>
+                    <li><strong>Penyakit Terkait:</strong> Defisiensi Yodium Kongenital (<code>E00.0, E00.1</code>).</li>
+                    <li><strong>Kegunaan Umum:</strong> Menggantikan defisiensi hormon tiroksin agar laju metabolisme berjalan normal dan menunjang maturasi saraf.</li>
+                    <li><strong>Mekanisme Edukatif Obat–Penyakit:</strong> Diubah menjadi T3 aktif di jaringan perifer untuk meregulasi metabolisme &amp; perkembangan saraf.</li>
+                    <li class="pharma-drug-ref"><strong>Sumber Rujukan Ilmiah:</strong> <em>Katzung, Thyroid &amp; Antithyroid Drugs; WHO EML.</em></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="pharma-drug-row">
+                <div class="pharma-drug-icon" aria-hidden="true">
+                  <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                    <g transform="rotate(-38 16 16)">
+                      <rect x="6" y="10" width="20" height="12" rx="6" fill="#0d9488" stroke="#475569" stroke-width="1.5" />
+                      <path d="M16 10H20A6 6 0 0 1 20 22H16V10Z" fill="#f8fafc" />
+                    </g>
+                  </svg>
+                </div>
+                <div class="pharma-drug-body">
+                  <h6>Desmopressin (DDAVP)</h6>
+                  <ul class="pharma-drug-bullets">
+                    <li><strong>Nama Generik:</strong> Desmopressin Acetate (Dagang: Minirin · Sediaan: Tablet / Semprot hidung).</li>
+                    <li><strong>Golongan Farmakologis:</strong> Analog Vasopresin / ADH.</li>
+                    <li><strong>Penyakit Terkait:</strong> Diabetes Insipidus Sentral (<code>E23.2</code>).</li>
+                    <li><strong>Kegunaan Umum:</strong> Membantu memekatkan urin dan mencegah kehilangan cairan berlebih akibat kurangnya ADH.</li>
+                    <li><strong>Mekanisme Edukatif Obat–Penyakit:</strong> Agonis reseptor V2 duktus kolektivus ginjal untuk membuka akuaporin-2.</li>
+                    <li class="pharma-drug-ref"><strong>Sumber Rujukan Ilmiah:</strong> <em>Katzung, Hypothalamic &amp; Pituitary Hormones.</em></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="pharma-drug-row">
+                <div class="pharma-drug-icon" aria-hidden="true">
+                  <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                    <rect x="11" y="10" width="10" height="17" rx="2.5" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.6" />
+                    <rect x="12" y="5" width="8" height="5" rx="1" fill="#0369a1" />
+                  </svg>
+                </div>
+                <div class="pharma-drug-body">
+                  <h6>Larutan Elektrolit &amp; Formula Enteral</h6>
+                  <ul class="pharma-drug-bullets">
+                    <li><strong>Nama Generik:</strong> Larutan NaCl/KCl &amp; Formula F-75/F-100 (Sediaan: Infus IV &amp; cairan enteral NGT).</li>
+                    <li><strong>Golongan Farmakologis:</strong> Terapi Cairan, Elektrolit &amp; Nutrisi.</li>
+                    <li><strong>Penyakit Terkait:</strong> Elektrolit Imbalance (<code>E87.8</code>) &amp; Marasmus-Kwashiorkor (<code>E42</code>).</li>
+                    <li><strong>Kegunaan Umum:</strong> Memulihkan keseimbangan ion plasma dan kecukupan makronutrien secara bertahap.</li>
+                    <li><strong>Mekanisme Edukatif Obat–Penyakit:</strong> Memulihkan gradien ion transmembran &amp; sintesis protein bertahap (terkait ICD-9-CM <code>99.18</code> &amp; <code>96.6</code>).</li>
+                    <li class="pharma-drug-ref"><strong>Sumber Rujukan Ilmiah:</strong> <em>Kemenkes RI Tata Laksana Gizi Buruk; ICD-9-CM Vol. 3.</em></li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <h4 style="color:#0e8388;margin:22px 0 12px;">Bagian 2 — Farmakologi Bab V (F00–F99)</h4>
+          <div class="pharma-diag-grid">
+            <article class="pharma-diag-card">
+              <div class="pharma-diag-head">
+                <div class="pharma-organ-circle" aria-hidden="true">
+                  <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                    <path d="M8 22C6 18 8 11 14 10C17 8 22 9 24 13C26 17 24 22 20 22H8Z" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.8" />
+                    <circle cx="14" cy="15" r="2.2" fill="#0284c7" />
+                  </svg>
+                </div>
+                <div>
+                  <span class="pharma-diag-eyebrow">DIAGNOSIS:</span>
+                  <h5>Gangguan Psikotik &amp; Skizoafektif (F20, F25.0)</h5>
+                </div>
+              </div>
+              <div class="pharma-drug-row">
+                <div class="pharma-drug-icon" aria-hidden="true">
+                  <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                    <circle cx="16" cy="16" r="10" fill="#f1f5f9" stroke="#64748b" stroke-width="1.8" />
+                    <line x1="9" y1="21" x2="23" y2="11" stroke="#94a3b8" stroke-width="1.8" />
+                  </svg>
+                </div>
+                <div class="pharma-drug-body">
+                  <h6>Risperidone / Haloperidol</h6>
+                  <ul class="pharma-drug-bullets">
+                    <li><strong>Nama Generik:</strong> Risperidone / Haloperidol (Dagang: Risperdal / Serenace · Sediaan: Tablet / Injeksi IM).</li>
+                    <li><strong>Golongan Farmakologis:</strong> Antipsikotik Atipikal &amp; Tipikal.</li>
+                    <li><strong>Penyakit Terkait:</strong> Skizofrenia (<code>F20.-</code>) &amp; Skizoafektif Tipe Manik (<code>F25.0</code>).</li>
+                    <li><strong>Kegunaan Umum:</strong> Meredakan gejala psikotik seperti halusinasi, waham, dan disorganisasi pikiran.</li>
+                    <li><strong>Mekanisme Edukatif Obat–Penyakit:</strong> Antagonis reseptor dopamin D2 mesolimbik (dan 5-HT2A pada atipikal).</li>
+                    <li class="pharma-drug-ref"><strong>Sumber Rujukan Ilmiah:</strong> <em>Katzung, Antipsychotic Agents &amp; Lithium; WHO ICD-10 Bab V.</em></li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            <article class="pharma-diag-card">
+              <div class="pharma-diag-head">
+                <div class="pharma-organ-circle" aria-hidden="true">
+                  <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                    <circle cx="11" cy="16" r="5" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.6" />
+                    <circle cx="22" cy="16" r="5" fill="#fef3c7" stroke="#b45309" stroke-width="1.6" />
+                  </svg>
+                </div>
+                <div>
+                  <span class="pharma-diag-eyebrow">DIAGNOSIS:</span>
+                  <h5>Gangguan Mood, Depresi Nifas &amp; Fobia (F53.0, F31.8, F40.2)</h5>
+                </div>
+              </div>
+              <div class="pharma-drug-row">
+                <div class="pharma-drug-icon" aria-hidden="true">
+                  <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                    <g transform="rotate(-38 16 16)">
+                      <rect x="6" y="10" width="20" height="12" rx="6" fill="#0d9488" stroke="#475569" stroke-width="1.5" />
+                      <path d="M16 10H20A6 6 0 0 1 20 22H16V10Z" fill="#f8fafc" />
+                    </g>
+                  </svg>
+                </div>
+                <div class="pharma-drug-body">
+                  <h6>Sertraline / Fluoxetine</h6>
+                  <ul class="pharma-drug-bullets">
+                    <li><strong>Nama Generik:</strong> Sertraline / Fluoxetine (Dagang: Zoloft / Prozac · Sediaan: Tablet / Kapsul oral).</li>
+                    <li><strong>Golongan Farmakologis:</strong> Antidepresan (SSRI).</li>
+                    <li><strong>Penyakit Terkait:</strong> Depresi Nifas (<code>F53.0</code>) &amp; Fobia (<code>F40.-</code>).</li>
+                    <li><strong>Kegunaan Umum:</strong> Memulihkan regulasi suasana perasaan dan menurunkan kecemasan patologis.</li>
+                    <li><strong>Mekanisme Edukatif Obat–Penyakit:</strong> Menghambat reuptake serotonin presinaps sehingga konsentrasi 5-HT di sinaps meningkat.</li>
+                    <li class="pharma-drug-ref"><strong>Sumber Rujukan Ilmiah:</strong> <em>Katzung, Antidepressant Agents; Kemenkes RI.</em></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="pharma-drug-row">
+                <div class="pharma-drug-icon" aria-hidden="true">
+                  <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                    <circle cx="16" cy="16" r="10" fill="#f1f5f9" stroke="#64748b" stroke-width="1.8" />
+                    <line x1="9" y1="21" x2="23" y2="11" stroke="#94a3b8" stroke-width="1.8" />
+                  </svg>
+                </div>
+                <div class="pharma-drug-body">
+                  <h6>Lithium Carbonate / Sodium Valproate</h6>
+                  <ul class="pharma-drug-bullets">
+                    <li><strong>Nama Generik:</strong> Lithium Carbonate / Sodium Valproate (Dagang: Frimania / Depakote · Sediaan: Tablet oral).</li>
+                    <li><strong>Golongan Farmakologis:</strong> Mood Stabilizer.</li>
+                    <li><strong>Penyakit Terkait:</strong> Bipolar Tipe II (<code>F31.8</code>) &amp; Skizoafektif Tipe Manik (<code>F25.0</code>).</li>
+                    <li><strong>Kegunaan Umum:</strong> Mencegah fluktuasi ekstrem episode mania/hipomania dan depresi.</li>
+                    <li><strong>Mekanisme Edukatif Obat–Penyakit:</strong> Memodulasi sinyal intraseluler &amp; meningkatkan aktivitas inhibitorik GABA.</li>
+                    <li class="pharma-drug-ref"><strong>Sumber Rujukan Ilmiah:</strong> <em>Katzung, Antipsychotic Agents &amp; Lithium; Stahl.</em></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="pharma-drug-row">
+                <div class="pharma-drug-icon" aria-hidden="true">
+                  <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                    <circle cx="16" cy="16" r="10" fill="#f1f5f9" stroke="#64748b" stroke-width="1.8" />
+                    <line x1="9" y1="21" x2="23" y2="11" stroke="#94a3b8" stroke-width="1.8" />
+                  </svg>
+                </div>
+                <div class="pharma-drug-body">
+                  <h6>Lorazepam / Diazepam</h6>
+                  <ul class="pharma-drug-bullets">
+                    <li><strong>Nama Generik:</strong> Lorazepam / Diazepam (Dagang: Ativan / Valium · Sediaan: Tablet / Injeksi IV).</li>
+                    <li><strong>Golongan Farmakologis:</strong> Ansiolitik (Benzodiazepin).</li>
+                    <li><strong>Penyakit Terkait:</strong> Ansietas Akut &amp; Fobia Berat (<code>F40.-</code>).</li>
+                    <li><strong>Kegunaan Umum:</strong> Memberikan efek menenangkan dan menurunkan hiperaktivitas saraf pada kondisi panik akut.</li>
+                    <li><strong>Mekanisme Edukatif Obat–Penyakit:</strong> Modulator alosterik positif reseptor GABA-A untuk menurunkan hiperaktivitas amigdala.</li>
+                    <li class="pharma-drug-ref"><strong>Sumber Rujukan Ilmiah:</strong> <em>Katzung, Sedative-Hypnotic Drugs.</em></li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= VIEW: QUIZ (EXERCISES EASY / MEDIUM / DIFFICULT) ================= -->
+      <section id="view-quiz" class="app-view" aria-label="Exercises Latihan Kasus Isian">
+        <div class="who-sheet">
+          <div class="who-watermark teal" aria-hidden="true">Exercises</div>
+          <div class="who-sheet-body">
+            <div class="quiz-toolbar">
+              <div class="quiz-filters-stack">
+                <div class="quiz-filters" role="group" aria-label="Filter Bab Soal">
+                  <button class="filter-btn active" data-filter="all" type="button">Semua Bab (40)</button>
+                  <button class="filter-btn" data-filter="bab4" type="button">Bab IV: E00–E90 (20)</button>
+                  <button class="filter-btn" data-filter="bab5" type="button">Bab V: F00–F99 (20)</button>
+                  <button id="btn-back-levels" class="btn-toggle-key hidden" type="button">← Pilih Level (Easy / Medium / Difficult)</button>
+                </div>
+                <div class="code-type-row" role="group" aria-label="Filter Jenis Klasifikasi">
+                  <button class="code-type-btn active" data-codetype="all" type="button">Semua Jenis (<span id="count-type-all">40</span>)</button>
+                  <button class="code-type-btn" data-codetype="icd10" type="button">Diagnosis ICD-10 (<span id="count-type-icd10">20</span>)</button>
+                  <button class="code-type-btn" data-codetype="icd9" type="button">Prosedur ICD-9-CM (<span id="count-type-icd9">20</span>)</button>
+                  <button id="btn-toggle-recap" class="btn-recap-trigger" type="button">🖨 Cetak / Simpan Rekap Hasil Latihan</button>
+                </div>
+              </div>
+
+              <div class="quiz-score-panel" aria-live="polite">
+                <div class="score-item">
+                  <span class="score-label">Diisi</span>
+                  <strong id="score-answered">0 / 40</strong>
+                </div>
+                <div class="score-item">
+                  <span class="score-label">Tepat</span>
+                  <strong id="score-correct">0</strong>
+                </div>
+                <div class="score-item score-highlight">
+                  <span class="score-label">Skor</span>
+                  <strong id="score-percent">0%</strong>
+                </div>
+              </div>
+            </div>
+
+            <section id="print-recap-sheet" class="recap-panel hidden" aria-label="Rekap Hasil Latihan"></section>
+
+            <div id="quiz-level-hub"></div>
+            <div id="quiz-container" class="quiz-container"></div>
+
+            <div id="quiz-actions-footer" class="quiz-actions-footer hidden">
+              <button id="btn-reset-quiz" class="btn-secondary" type="button">↻ Ulangi Latihan</button>
+              <button id="btn-footer-recap" class="btn-recap-trigger" type="button">🖨 Cetak / Simpan Rekap Hasil Latihan</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= VIEW: INFO / REFERENSI ================= -->
+      <section id="view-references" class="app-view" aria-label="Referensi dan Daftar Pustaka">
+        <div class="content-card">
+          <div class="section-banner">
+            <h3>Informasi Versi Klasifikasi &amp; Daftar Pustaka</h3>
+            <p>Seluruh kode diagnosis, prosedur, materi biomedis, dan farmakologi mengacu pada sumber resmi berikut.</p>
+          </div>
+
+          <div class="ref-highlight">
+            <h4>Acuan Versi Klasifikasi Resmi &amp; Tautan Rujukan Dosen</h4>
+            <ul>
+              <li><strong>Diagnosis Penyakit:</strong> WHO <em>International Statistical Classification of Diseases and Related Health Problems, 10th Revision (ICD-10)</em> Versi 2010 — selaras dengan standar dokumentasi terminologi platform <strong>SATUSEHAT Kementerian Kesehatan RI</strong>.</li>
+              <li><strong>Prosedur / Tindakan Medis:</strong> <em>International Classification of Diseases, 9th Revision, Clinical Modification (ICD-9-CM) Volume 3</em>.</li>
+              <li><strong>WHO ICD-10 Volume 2 (Instruction Manual PDF):</strong> <a href="https://iris.who.int/bitstream/handle/10665/43764/9789241547215_eng.pdf?sequence=1" target="_blank" rel="noopener noreferrer">https://iris.who.int/bitstream/handle/10665/43764/9789241547215_eng.pdf?sequence=1</a></li>
+              <li><strong>WHO ICD-10 Interactive Training Tool (Contoh Modul KAK):</strong> <a href="https://icdtraining.z16.web.core.windows.net/training/ICD10Training/ICD-10%20training/Start/index.html" target="_blank" rel="noopener noreferrer">WHO ICD-10 Training Tool</a></li>
+            </ul>
+          </div>
+
+          <h4>Daftar Pustaka</h4>
+          <ol class="ref-list">
+            <li>World Health Organization (WHO). (2010). <em>ICD-10 Volume 1: Tabular List</em>. Geneva: World Health Organization.</li>
+            <li>World Health Organization (WHO). (2010). <em>ICD-10 Volume 2: Instruction Manual (ISBN 9789241547215)</em>. Geneva: WHO. <a href="https://iris.who.int/bitstream/handle/10665/43764/9789241547215_eng.pdf?sequence=1" target="_blank" rel="noopener noreferrer">Tautan Resmi WHO</a>.</li>
+            <li>World Health Organization (WHO). (2010). <em>ICD-10 Volume 3: Alphabetical Index</em>. Geneva: World Health Organization.</li>
+            <li>Centers for Medicare &amp; Medicaid Services / NCHS. <em>ICD-9-CM Volume 3: Tabular List &amp; Alphabetic Index to Procedures</em>.</li>
+            <li>Kementerian Kesehatan Republik Indonesia. <em>Standar Terminologi Klinis dan Panduan Implementasi SATUSEHAT / INA-CBGs</em>. Jakarta: Kemenkes RI.</li>
+            <li>Tortora, G. J., &amp; Derrickson, B. <em>Principles of Anatomy and Physiology</em> (Sistem Endokrin &amp; Sistem Saraf Pusat).</li>
+            <li>Katzung, B. G., &amp; Vanderah, T. W. <em>Basic &amp; Clinical Pharmacology</em>.</li>
+            <li>Program Studi D3 Rekam Medis &amp; Informasi Kesehatan Universitas Esa Unggul. (2026). <em>Kerangka Acuan Kerja (KAK) &amp; Kompilasi Soal Kodifikasi Capstone Experience Semester 3</em>.</li>
+          </ol>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <span>Capstone Experience Semester 3 · Prodi D3 Rekam Medis &amp; Informasi Kesehatan — Universitas Esa Unggul</span>
+      <span>Media Pembelajaran Akademik · Bebas Data Pasien Nyata</span>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
